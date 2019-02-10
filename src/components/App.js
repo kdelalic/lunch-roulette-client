@@ -3,13 +3,15 @@ import {Button} from "@material-ui/core";
 import axios from "axios";
 import "./App.css";
 
-const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
+const BASE_SERVER_URL = process.env.REACT_APP_SERVER_URL || "https://localhost:3001";
 const LIMIT = 50;
 const RESTAURANT_RESET = 900;
 
 class App extends Component {
     constructor(props) {
         super(props);
+
+        console.log(process.env.BASE_SERVER_URL)
 
         // window.localStorage.clear();
 
