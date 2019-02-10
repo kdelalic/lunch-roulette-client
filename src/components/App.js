@@ -11,8 +11,6 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        console.log(process.env.BASE_SERVER_URL)
-
         // window.localStorage.clear();
 
         // Previous offset in the list of restaurants
