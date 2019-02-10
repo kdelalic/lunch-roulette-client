@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without crashing 1`] = `
+<div
+  className="App"
+>
+  <WithStyles(Button)
+    color="primary"
+    id="show-restaurants"
+    onClick={[Function]}
+    variant="contained"
+  >
+    Show nearby restaurants
+     
+  </WithStyles(Button)>
+   
+</div>
+`;
