@@ -1,0 +1,2 @@
+[![Build Status](https://travis-ci.com/kdelalic/lunch-roulette-client.svg?token=zzzrDLkmTq4zebktZu48&branch=master)](https://travis-ci.com/kdelalic/lunch-roulette-client)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/12e6855b-dfd7-4a98-be8a-6992e5a934fc/deploy-status)](https://app.netlify.com/sites/lunch-roulette/deploys)
