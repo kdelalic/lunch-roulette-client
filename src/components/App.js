@@ -3,7 +3,7 @@ import {Button} from "@material-ui/core";
 import axios from "axios";
 import "./App.css";
 
-const BASE_SERVER_URL = process.env.REACT_APP_SERVER_URL || "https://localhost:3001";
+let BASE_SERVER_URL = process.env.NODE_ENV ? process.env.REACT_APP_SERVER_URL : "http://localhost:5000";
 const LIMIT = 50;
 const RESTAURANT_RESET = 900;
 
