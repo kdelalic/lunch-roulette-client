@@ -3,7 +3,7 @@ import {Button} from "@material-ui/core";
 import axios from "axios";
 import "./App.css";
 
-const BASE_SERVER_URL = process.env.SERVER_ORIGIN;
+const BASE_SERVER_URL = process.env.BASE_SERVER_URL;
 const LIMIT = 50;
 const RESTAURANT_RESET = 900;
 

@@ -4,17 +4,14 @@ node_js:
   - "lts/*"
 
 install: 
-  - npm run install-client
-  - npm run install-server
+  - npm install
 
 before_script:
-  - npm run start-server
-  - sleep 10
+  - npm run build
+
+script:
+  - npm run test
 
 cache:
   directories:
     - node_modules
-
-script:
-  - npm run build-client
-  - npm run test-client
