@@ -44,8 +44,5 @@
         "collectCoverageFrom": [
             "src/components/**/*.js"
         ]
-    },
-    "resolutions": {
-        "ajv": "6.8.1"
     }
 }
