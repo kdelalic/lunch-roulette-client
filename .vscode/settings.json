@@ -1,4 +1,5 @@
 {
+    "editor.formatOnSave": true,
     "jest.debugMode": true,
     "jest.rootPath": "client/src",
     "jest.pathToJest": "npm test --",
