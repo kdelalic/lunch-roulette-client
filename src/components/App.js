@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
+import { BASE_SERVER_URL, LIMIT, RESTAURANT_RESET } from '../config';
 import './App.css';
-
-const BASE_SERVER_URL =
-  process.env.NODE_ENV === 'production'
-    ? process.env.REACT_APP_SERVER_URL
-    : 'http://localhost:5000';
-const LIMIT = 50;
-const RESTAURANT_RESET = 900;
 
 class App extends Component {
   constructor(props) {
