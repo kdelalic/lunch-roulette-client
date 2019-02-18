@@ -11,8 +11,6 @@ exports[`renders without crashing 1`] = `
     variant="contained"
   >
     Show nearby restaurants
-     
   </WithStyles(Button)>
-   
 </div>
 `;
