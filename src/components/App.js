@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    window.localStorage.clear();
+    // window.localStorage.clear();
 
     // Previous offset in the list of restaurants
     const prevOffset = parseInt(window.localStorage.getItem('prevOffset'), 10);
