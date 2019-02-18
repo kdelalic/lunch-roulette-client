@@ -10,11 +10,22 @@ class App extends Component {
 
     // window.localStorage.clear();
 
-    // Previous offset in the list of restaurants
-    const prevOffset = parseInt(window.localStorage.getItem('prevOffset'), 10);
+    let prevOffset;
+    let prevRestaurants;
 
-    // List of previous restaurants
-    const prevRestaurants = JSON.parse(window.localStorage.getItem('prevRestaurants'));
+    try {
+      // Previous offset in the list of restaurants
+      prevOffset = parseInt(window.localStorage.getItem('prevOffset'), 10);
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      // List of previous restaurants
+      prevRestaurants = JSON.parse(window.localStorage.getItem('prevRestaurants'));
+    } catch (err) {
+      console.log(err);
+    }
 
     console.log('prevOffset', prevOffset);
     console.log('prevRestaurants', prevRestaurants);
@@ -33,7 +44,6 @@ class App extends Component {
 
   // Gets geolocation info
   getLocation = () => {
-    const { coords } = this.state;
     // Checks if geolocation feature exists in browser
     if (navigator.geolocation) {
       // Sets message state for getting geolocation
@@ -45,31 +55,37 @@ class App extends Component {
           // Gets gps info
           navigator.geolocation.getCurrentPosition(
             position => {
-              console.log(position.coords.latitude, position.coords.longitude);
+              const { latitude, longitude } = position.coords;
+              console.log(latitude, longitude);
               // Sets geolocation state
               this.setState(
                 prevState => {
                   let { offset, restaurants } = prevState;
-                  // Gets previous gps coordinates from local storage
-                  const prevCoords = JSON.parse(window.localStorage.getItem('prevCoords'));
+                  let prevCoords = window.localStorage.getItem('prevCoords');
 
                   // Checks if previous gps location is different than
                   // current gps location by magnitude of ~1km
                   // Resets offset and restaurants list if true,
                   // otherwise we can reuse previous session's already fetched info
-                  if (
-                    prevCoords &&
-                    (Math.abs(position.coords.latitude - prevCoords.latitude) > 0.01 ||
-                      Math.abs(position.coords.longitude - prevCoords.longitude) > 0.01)
-                  ) {
-                    offset = 0;
-                    restaurants = [];
+                  if (prevCoords) {
+                    try {
+                      prevCoords = JSON.parse(window.localStorage.getItem('prevCoords'));
+                    } catch (err) {
+                      console.log(err);
+                    }
+                    if (
+                      Math.abs(latitude - prevCoords.latitude) > 0.01 ||
+                      Math.abs(longitude - prevCoords.longitude) > 0.01
+                    ) {
+                      offset = 0;
+                      restaurants = [];
+                    }
                   }
 
                   return {
                     coords: {
-                      latitude: position.coords.latitude,
-                      longitude: position.coords.longitude
+                      latitude,
+                      longitude
                     },
                     message: 'Getting restaurant information...',
                     offset,
@@ -77,6 +93,7 @@ class App extends Component {
                   };
                 },
                 () => {
+                  const { coords } = this.state;
                   // Stores current coordinates in localStorage for next session
                   window.localStorage.setItem('prevCoords', JSON.stringify(coords));
                   // Loads restaurants into app
@@ -132,7 +149,8 @@ class App extends Component {
     return new Promise((resolve, reject) => {
       axios
         .get(
-          `${BASE_SERVER_URL}/api/restaurants?latitude=${coords.latitude}` +
+          `${BASE_SERVER_URL}/api/restaurants` +
+            `?latitude=${coords.latitude}` +
             `&longitude=${coords.longitude}` +
             `&offset=${offset}` +
             `&limit=${limit}`
@@ -180,9 +198,10 @@ class App extends Component {
   // Displays next restaurant
   getNextRestaurant = () => {
     const { message, restaurants, fetching, limit, prevRestaurants } = this.state;
+
+    // If number of restaurants in state are less than 20% of limit,
+    // then more restaurants are loaded into the state
     if (!message && restaurants.length <= Math.round(limit * 0.2) && !fetching) {
-      // If number of restaurants in state are less than 20% of limit,
-      // then more restaurants are loaded into the state
       this.setState(
         {
           fetching: true
