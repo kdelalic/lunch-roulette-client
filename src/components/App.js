@@ -17,18 +17,18 @@ class App extends Component {
       // Previous offset in the list of restaurants
       prevOffset = parseInt(window.localStorage.getItem('prevOffset'), 10);
     } catch (err) {
-      console.log(err);
+      // console.log(`parseInt for prevOffset error: ${err}`);
     }
 
     try {
       // List of previous restaurants
       prevRestaurants = JSON.parse(window.localStorage.getItem('prevRestaurants'));
     } catch (err) {
-      console.log(err);
+      // console.log(`JSON.parse for prevRestaurants error: ${err}`);
     }
 
-    console.log('prevOffset', prevOffset);
-    console.log('prevRestaurants', prevRestaurants);
+    // console.log(`prevOffset: ${prevOffset}`);
+    // console.log(`prevRestaurants: ${prevRestaurants}`);
 
     this.state = {
       offset: isNaN(prevOffset) || prevOffset > RESTAURANT_RESET ? 0 : prevOffset,
@@ -38,8 +38,8 @@ class App extends Component {
       prevRestaurants: prevRestaurants || []
     };
 
-    const { offset } = this.state;
-    console.log('offset', offset);
+    // const { offset } = this.state;
+    // console.log(`offset: ${offset}`);
   }
 
   // Gets geolocation info
@@ -56,7 +56,7 @@ class App extends Component {
           navigator.geolocation.getCurrentPosition(
             position => {
               const { latitude, longitude } = position.coords;
-              console.log(latitude, longitude);
+              // console.log(`latitude, longitude: ${latitude},${longitude}`);
               // Sets geolocation state
               this.setState(
                 prevState => {
@@ -71,7 +71,7 @@ class App extends Component {
                     try {
                       prevCoords = JSON.parse(window.localStorage.getItem('prevCoords'));
                     } catch (err) {
-                      console.log(err);
+                      // console.log(`JSON.parse for prevCoords error: ${err}`);
                     }
                     if (
                       Math.abs(latitude - prevCoords.latitude) > 0.01 ||
@@ -103,7 +103,7 @@ class App extends Component {
                       this.getNextRestaurant();
                     })
                     .catch(err => {
-                      console.log(`fetchRestaurants ${err}`);
+                      // console.log(`fetchRestaurants ${err}`);
                     });
                 }
               );
@@ -234,7 +234,7 @@ class App extends Component {
           prevRestaurants
         }),
         () => {
-          console.log(restaurants);
+          // console.log(`restaurants: ${restaurants}`);
         }
       );
     }
