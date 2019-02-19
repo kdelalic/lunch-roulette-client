@@ -192,7 +192,8 @@ class App extends Component {
                 restaurants: restaurants.concat(prevState.restaurants),
                 message: null,
                 fetching: false,
-                offset: prevState.offset + prevState.limit,
+                offset:
+                  prevState.offset >= RESTAURANT_RESET ? 0 : prevState.offset + prevState.limit,
                 prevRestaurants
               };
             },
