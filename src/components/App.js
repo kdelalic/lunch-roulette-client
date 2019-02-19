@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 import axios from 'axios';
 
 import './App.css';
-import { BASE_SERVER_URL, LIMIT, RESTAURANT_RESET } from '../utils/config';
+import { BASE_SERVER_URL, LIMIT, RESTAURANT_RESET, REFILL_THRESHOLD } from '../utils/config';
 import Logger from '../utils/logger';
 import getRandomNumber from '../utils/common';
 import messages from '../messages/en';
@@ -213,7 +213,7 @@ class App extends Component {
 
     // If number of restaurants in state are less than 20% of limit,
     // then more restaurants are loaded into the stat
-    if (!message && restaurants.length <= Math.round(limit * 0.8) && !fetching) {
+    if (!message && restaurants.length <= Math.round(limit * REFILL_THRESHOLD) && !fetching) {
       this.setState(
         {
           fetching: true,

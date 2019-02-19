@@ -16,3 +16,6 @@ export const LOGGER_LEVEL = process.env.LOGGER_LEVEL || 'info';
 
 // Logger levels to use
 export const LOGGER_LEVELS = { error: 0, warn: 1, info: 2, trace: 3, debug: 4 };
+
+// Threshold for refilling restaurants array (percentage)
+export const REFILL_THRESHOLD = 0.2;
