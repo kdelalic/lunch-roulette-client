@@ -33,7 +33,7 @@ class App extends Component {
     }
 
     this.logger.info('prevOffset', prevOffset);
-    this.logger.info('prevRestaurants', prevRestaurants);
+    this.logger.info('number of prevRestaurants', prevRestaurants.length);
 
     this.state = {
       offset: isNaN(prevOffset) || prevOffset > RESTAURANT_RESET ? 0 : prevOffset,
@@ -241,7 +241,7 @@ class App extends Component {
           prevRestaurants
         }),
         () => {
-          this.logger.trace('restaurants', JSON.stringify(restaurants));
+          this.logger.trace('number of restaurants', restaurants.length);
         }
       );
     }
