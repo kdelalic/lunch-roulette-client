@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
-import { BASE_SERVER_URL, LIMIT, RESTAURANT_RESET } from '../config';
+import { BASE_SERVER_URL, LIMIT, RESTAURANT_RESET, DEVELOPMENT_MODE } from '../utils/config';
+import Logger from '../utils/logger';
 import './App.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
+
+    let logger;
+    if (DEVELOPMENT_MODE) {
+      logger = new Logger();
+    }
 
     // window.localStorage.clear();
 
@@ -17,18 +23,18 @@ class App extends Component {
       // Previous offset in the list of restaurants
       prevOffset = parseInt(window.localStorage.getItem('prevOffset'), 10);
     } catch (err) {
-      // console.log(`parseInt for prevOffset error: ${err}`);
+      logger.error('parseInt for prevOffset', err);
     }
 
     try {
       // List of previous restaurants
       prevRestaurants = JSON.parse(window.localStorage.getItem('prevRestaurants'));
     } catch (err) {
-      // console.log(`JSON.parse for prevRestaurants error: ${err}`);
+      this.logger.info('JSON.parse for prevRestaurants error', err);
     }
 
-    // console.log(`prevOffset: ${prevOffset}`);
-    // console.log(`prevRestaurants: ${prevRestaurants}`);
+    logger.info('prevOffset', prevOffset);
+    logger.info('prevRestaurants', prevRestaurants);
 
     this.state = {
       offset: isNaN(prevOffset) || prevOffset > RESTAURANT_RESET ? 0 : prevOffset,
@@ -38,8 +44,8 @@ class App extends Component {
       prevRestaurants: prevRestaurants || []
     };
 
-    // const { offset } = this.state;
-    // console.log(`offset: ${offset}`);
+    const { offset } = this.state;
+    logger.info('offset', offset);
   }
 
   // Gets geolocation info
@@ -56,7 +62,9 @@ class App extends Component {
           navigator.geolocation.getCurrentPosition(
             position => {
               const { latitude, longitude } = position.coords;
-              // console.log(`latitude, longitude: ${latitude},${longitude}`);
+
+              this.logger.info('latitude, longitude', latitude, longitude);
+
               // Sets geolocation state
               this.setState(
                 prevState => {
@@ -71,7 +79,7 @@ class App extends Component {
                     try {
                       prevCoords = JSON.parse(window.localStorage.getItem('prevCoords'));
                     } catch (err) {
-                      // console.log(`JSON.parse for prevCoords error: ${err}`);
+                      this.logger.error('JSON.parse for prevCoords', err);
                     }
                     if (
                       Math.abs(latitude - prevCoords.latitude) > 0.01 ||
@@ -103,7 +111,7 @@ class App extends Component {
                       this.getNextRestaurant();
                     })
                     .catch(err => {
-                      // console.log(`fetchRestaurants ${err}`);
+                      this.logger.info('fetchRestaurants', err);
                     });
                 }
               );
@@ -234,7 +242,7 @@ class App extends Component {
           prevRestaurants
         }),
         () => {
-          // console.log(`restaurants: ${restaurants}`);
+          this.logger.info('restaurants', restaurants);
         }
       );
     }
