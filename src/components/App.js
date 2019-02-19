@@ -230,8 +230,9 @@ class App extends Component {
       // Random number used to pick random restaurant from restaurant array in state
       const randomNumber = getRandomNumber(restaurants.length, 0);
       const restaurant = restaurants[randomNumber];
+      const { id, name, rating, location } = restaurant;
 
-      prevRestaurants.push(restaurant.id);
+      prevRestaurants.push(id);
 
       // Updates previous restaurants in local storage
       window.localStorage.setItem('prevRestaurants', JSON.stringify(prevRestaurants));
@@ -239,9 +240,9 @@ class App extends Component {
       this.setState(
         prevState => ({
           restaurant: {
-            name: restaurant.name,
-            rating: restaurant.rating,
-            location: restaurant.location.address1
+            name,
+            rating,
+            location: location.address1
           },
           // Filters out current restaurant from potential restaurants
           restaurants: prevState.restaurants.filter((_, i) => i !== randomNumber),
