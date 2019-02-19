@@ -9,9 +9,8 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    let logger;
     if (DEVELOPMENT_MODE) {
-      logger = new Logger();
+      this.logger = new Logger();
     }
 
     // window.localStorage.clear();
@@ -23,7 +22,7 @@ class App extends Component {
       // Previous offset in the list of restaurants
       prevOffset = parseInt(window.localStorage.getItem('prevOffset'), 10);
     } catch (err) {
-      logger.error('parseInt for prevOffset', err);
+      this.logger.error('parseInt for prevOffset', err);
     }
 
     try {
@@ -33,8 +32,8 @@ class App extends Component {
       this.logger.info('JSON.parse for prevRestaurants error', err);
     }
 
-    logger.info('prevOffset', prevOffset);
-    logger.info('prevRestaurants', prevRestaurants);
+    this.logger.info('prevOffset', prevOffset);
+    this.logger.info('prevRestaurants', prevRestaurants);
 
     this.state = {
       offset: isNaN(prevOffset) || prevOffset > RESTAURANT_RESET ? 0 : prevOffset,
@@ -45,7 +44,7 @@ class App extends Component {
     };
 
     const { offset } = this.state;
-    logger.info('offset', offset);
+    this.logger.info('offset', offset);
   }
 
   // Gets geolocation info
@@ -63,7 +62,7 @@ class App extends Component {
             position => {
               const { latitude, longitude } = position.coords;
 
-              this.logger.info('latitude, longitude', latitude, longitude);
+              this.logger.info('latitude,longitude', latitude, longitude);
 
               // Sets geolocation state
               this.setState(
@@ -242,7 +241,7 @@ class App extends Component {
           prevRestaurants
         }),
         () => {
-          this.logger.info('restaurants', restaurants);
+          this.logger.trace('restaurants', JSON.stringify(restaurants));
         }
       );
     }
