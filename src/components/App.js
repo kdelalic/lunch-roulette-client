@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
-import { BASE_SERVER_URL, LIMIT, RESTAURANT_RESET, DEVELOPMENT_MODE } from '../utils/config';
+import { BASE_SERVER_URL, LIMIT, RESTAURANT_RESET } from '../utils/config';
 import Logger from '../utils/logger';
 import './App.css';
 
@@ -9,9 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    if (DEVELOPMENT_MODE) {
-      this.logger = new Logger();
-    }
+    this.logger = new Logger();
 
     // window.localStorage.clear();
 
@@ -241,7 +239,7 @@ class App extends Component {
           prevRestaurants
         }),
         () => {
-          this.logger.trace('number of restaurants', restaurants.length);
+          this.logger.info('number of restaurants', restaurants.length);
         }
       );
     }

@@ -1,5 +1,7 @@
 import { createLogger, format, transports } from 'winston';
-import { LOGGER_LEVEL, LOGGER_LEVELS } from './config';
+import { LOGGER_LEVEL, LOGGER_LEVELS, DEVELOPMENT_MODE } from './config';
+
+const formatTemplate = (message, ...data) => `(${message}) ${data}`;
 
 export default class Logger {
   constructor() {
@@ -12,22 +14,32 @@ export default class Logger {
   }
 
   error = (message, ...data) => {
-    this.logger.error(`(${message}) ${data}`);
+    if (DEVELOPMENT_MODE) {
+      this.logger.error(formatTemplate(message, ...data));
+    }
   };
 
   warn = (message, ...data) => {
-    this.logger.warn(`(${message}) ${data}`);
+    if (DEVELOPMENT_MODE) {
+      this.logger.warn(formatTemplate(message, ...data));
+    }
   };
 
   info = (message, ...data) => {
-    this.logger.info(`(${message}) ${data}`);
+    if (DEVELOPMENT_MODE) {
+      this.logger.info(formatTemplate(message, ...data));
+    }
   };
 
   trace = (message, ...data) => {
-    this.logger.trace(`(${message}) ${data}`);
+    if (DEVELOPMENT_MODE) {
+      this.logger.trace(formatTemplate(message, ...data));
+    }
   };
 
   debug = (message, ...data) => {
-    this.logger.debug(`(${message}) ${data}`);
+    if (DEVELOPMENT_MODE) {
+      this.logger.debug(formatTemplate(message, ...data));
+    }
   };
 }
