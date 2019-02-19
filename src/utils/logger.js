@@ -12,22 +12,22 @@ export default class Logger {
   }
 
   error = (message, ...data) => {
-    this.logger.error(`${message} ${data}`);
+    this.logger.error(`(${message}) ${data}`);
   };
 
   warn = (message, ...data) => {
-    this.logger.warn(`${message} ${data}`);
+    this.logger.warn(`(${message}) ${data}`);
   };
 
   info = (message, ...data) => {
-    this.logger.info(`${message} ${data}`);
+    this.logger.info(`(${message}) ${data}`);
   };
 
   trace = (message, ...data) => {
-    this.logger.trace(`${message} ${data}`);
+    this.logger.trace(`(${message}) ${data}`);
   };
 
   debug = (message, ...data) => {
-    this.logger.debug(`${message} ${data}`);
+    this.logger.debug(`(${message}) ${data}`);
   };
 }
