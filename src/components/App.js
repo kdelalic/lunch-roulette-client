@@ -12,9 +12,9 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.logger = new Logger();
-
     // window.localStorage.clear();
+
+    this.logger = new Logger();
 
     let prevOffset;
     let prevRestaurants;
@@ -25,6 +25,14 @@ class App extends Component {
     } catch (err) {
       this.logger.error('parseInt for prevOffset', err);
     }
+    this.logger.info('prevOffset', prevOffset);
+
+    // If there is no previous offset
+    // or if the prevOffset is greater than the set limit,
+    // then we reset it to 0
+    // otherwise we use the prevOffset
+    const offset = isNaN(prevOffset) || prevOffset > RESTAURANT_RESET ? 0 : prevOffset;
+    this.logger.info('offset', offset);
 
     try {
       // List of previous restaurants
@@ -32,20 +40,15 @@ class App extends Component {
     } catch (err) {
       this.logger.info('JSON.parse for prevRestaurants error', err);
     }
-
-    this.logger.info('prevOffset', prevOffset);
     this.logger.info('number of prevRestaurants', prevRestaurants ? prevRestaurants.length : 0);
 
     this.state = {
-      offset: isNaN(prevOffset) || prevOffset > RESTAURANT_RESET ? 0 : prevOffset,
-      limit: LIMIT,
-      restaurants: [],
       fetching: false,
-      prevRestaurants: prevRestaurants || []
+      limit: LIMIT,
+      offset,
+      prevRestaurants: prevRestaurants || [],
+      restaurants: []
     };
-
-    const { offset } = this.state;
-    this.logger.info('offset', offset);
   }
 
   // Gets geolocation info
@@ -209,15 +212,17 @@ class App extends Component {
     const { message, restaurants, fetching, limit, prevRestaurants } = this.state;
 
     // If number of restaurants in state are less than 20% of limit,
-    // then more restaurants are loaded into the state
-    if (!message && restaurants.length <= Math.round(limit * 0.2) && !fetching) {
+    // then more restaurants are loaded into the stat
+    if (!message && restaurants.length <= Math.round(limit * 0.8) && !fetching) {
       this.setState(
         {
           fetching: true,
-          message: restaurants.length === 0 ? messages.gettingRestaurants : null
+          message: messages.gettingRestaurants
         },
         () => {
-          this.getNextRestaurant();
+          if (restaurants.length > 0) {
+            this.getNextRestaurant();
+          }
           this.fetchRestaurants();
         }
       );
@@ -240,7 +245,6 @@ class App extends Component {
           },
           // Filters out current restaurant from potential restaurants
           restaurants: prevState.restaurants.filter((_, i) => i !== randomNumber),
-          message: null,
           prevRestaurants
         }),
         () => {
@@ -251,9 +255,11 @@ class App extends Component {
   };
 
   render() {
-    const { message, coords, restaurant } = this.state;
+    const { message, restaurants } = this.state;
 
-    if (!message) {
+    if (!message || restaurants.length > 0) {
+      const { coords, restaurant } = this.state;
+
       if (restaurant) {
         // State where there is a restaurant loaded
         return (
@@ -283,6 +289,8 @@ class App extends Component {
         );
       }
     }
+
+    // Message displaying state
     return (
       <div className="App">
         <h2 id="message">{message}</h2>
