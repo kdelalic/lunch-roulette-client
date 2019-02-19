@@ -1,8 +1,4 @@
 {
   "editor.formatOnSave": true,
-  "editor.tabSize": 2,
-  "jest.debugMode": true,
-  "jest.rootPath": "src",
-  "jest.pathToJest": "npm test --",
-  "jest.showCoverageOnLoad": true
+  "editor.tabSize": 2
 }
