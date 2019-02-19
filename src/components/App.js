@@ -4,6 +4,7 @@ import axios from 'axios';
 import { BASE_SERVER_URL, LIMIT, RESTAURANT_RESET } from '../utils/config';
 import Logger from '../utils/logger';
 import './App.css';
+import getRandomNumber from '../utils/common';
 
 class App extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class App extends Component {
     }
 
     this.logger.info('prevOffset', prevOffset);
-    this.logger.info('number of prevRestaurants', prevRestaurants.length);
+    this.logger.info('number of prevRestaurants', prevRestaurants ? prevRestaurants.length : 0);
 
     this.state = {
       offset: isNaN(prevOffset) || prevOffset > RESTAURANT_RESET ? 0 : prevOffset,
@@ -218,7 +219,7 @@ class App extends Component {
       );
     } else {
       // Random number used to pick random restaurant from restaurant array in state
-      const randomNumber = this.getRandomNumber(restaurants.length);
+      const randomNumber = getRandomNumber(restaurants.length, 0);
       const restaurant = restaurants[randomNumber];
 
       prevRestaurants.push(restaurant.id);
@@ -243,11 +244,6 @@ class App extends Component {
         }
       );
     }
-  };
-
-  // Random number generator
-  getRandomNumber = max => {
-    return Math.floor(Math.random() * max);
   };
 
   render() {
