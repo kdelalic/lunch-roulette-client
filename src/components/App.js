@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
+
+import './App.css';
 import { BASE_SERVER_URL, LIMIT, RESTAURANT_RESET } from '../utils/config';
 import Logger from '../utils/logger';
-import './App.css';
 import getRandomNumber from '../utils/common';
+import messages from '../messages/en';
 
 class App extends Component {
   constructor(props) {
@@ -53,7 +55,7 @@ class App extends Component {
       // Sets message state for getting geolocation
       this.setState(
         {
-          message: 'Getting geolocation info...'
+          message: messages.gettingGeo
         },
         () => {
           // Gets gps info
@@ -93,7 +95,7 @@ class App extends Component {
                       latitude,
                       longitude
                     },
-                    message: 'Getting restaurant information...',
+                    message: messages.gettingRestaurants,
                     offset,
                     restaurants
                   };
@@ -120,18 +122,19 @@ class App extends Component {
               // Geolocation get errors
               switch (error.code) {
                 case error.PERMISSION_DENIED:
-                  message = 'User denied the request for Geolocation.';
+                  message = messages.geoPermissionDenied;
                   break;
                 case error.POSITION_UNAVAILABLE:
-                  message = 'Location information is unavailable.';
+                  message = messages.geoUnavailable;
                   break;
                 case error.TIMEOUT:
-                  message = 'The request to get user location timed out.';
+                  message = messages.geoRequestTimeout;
                   break;
                 case error.UNKNOWN_ERROR:
-                  message = 'An unknown error occurred.';
+                  message = messages.unknownError;
                   break;
                 default:
+                  message = messages.unknownError;
                   break;
               }
 
@@ -144,7 +147,7 @@ class App extends Component {
       );
     } else {
       this.setState({
-        message: 'Geolocation is not supported by this browser.'
+        message: messages.geoNotSupported
       });
     }
   };
@@ -210,7 +213,8 @@ class App extends Component {
     if (!message && restaurants.length <= Math.round(limit * 0.2) && !fetching) {
       this.setState(
         {
-          fetching: true
+          fetching: true,
+          message: restaurants.length === 0 ? messages.gettingRestaurants : null
         },
         () => {
           this.getNextRestaurant();
@@ -248,34 +252,36 @@ class App extends Component {
 
   render() {
     const { message, coords, restaurant } = this.state;
-    // Initial state
-    if (!message && !coords) {
-      return (
-        <div className="App">
-          <Button
-            id="show-restaurants"
-            onClick={this.getLocation}
-            variant="contained"
-            color="primary"
-          >
-            Show nearby restaurants
-          </Button>
-        </div>
-      );
-      // State where there is a restaurant loaded
-    }
-    if (!message && restaurant) {
-      return (
-        <div className="App">
-          <h2>{restaurant.name}</h2>
-          <h2>{restaurant.rating}</h2>
-          <h2>{restaurant.location}</h2>
-          <Button onClick={this.getNextRestaurant} variant="contained" color="primary">
-            Shuffle
-          </Button>
-        </div>
-      );
-      // Message state
+
+    if (!message) {
+      if (restaurant) {
+        // State where there is a restaurant loaded
+        return (
+          <div className="App">
+            <h2>{restaurant.name}</h2>
+            <h2>{restaurant.rating}</h2>
+            <h2>{restaurant.location}</h2>
+            <Button onClick={this.getNextRestaurant} variant="contained" color="primary">
+              Shuffle
+            </Button>
+          </div>
+        );
+      }
+      if (!coords) {
+        // Initial state
+        return (
+          <div className="App">
+            <Button
+              id="show-restaurants"
+              onClick={this.getLocation}
+              variant="contained"
+              color="primary"
+            >
+              Show nearby restaurants
+            </Button>
+          </div>
+        );
+      }
     }
     return (
       <div className="App">
