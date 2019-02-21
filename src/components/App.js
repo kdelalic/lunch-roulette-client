@@ -267,8 +267,15 @@ class App extends Component {
         return (
           <div className="App">
             <h2>{restaurant.name}</h2>
-            <h2>{restaurant.rating}</h2>
-            <h2>{restaurant.location}</h2>
+            <h2>
+              Rating:
+              {restaurant.rating}
+              /5
+            </h2>
+            <h2>
+              Address:
+              {restaurant.location}
+            </h2>
             <Button onClick={this.getNextRestaurant} variant="contained" color="primary">
               Shuffle
             </Button>
