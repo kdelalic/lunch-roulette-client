@@ -268,12 +268,12 @@ class App extends Component {
           <div className="App">
             <h2>{restaurant.name}</h2>
             <h2>
-              Rating:
+              Rating:&nbsp;
               {restaurant.rating}
               /5
             </h2>
             <h2>
-              Address:
+              Address:&nbsp;
               {restaurant.location}
             </h2>
             <Button onClick={this.getNextRestaurant} variant="contained" color="primary">
