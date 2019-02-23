@@ -19,3 +19,9 @@ export const LOGGER_LEVELS = { error: 0, warn: 1, info: 2, trace: 3, debug: 4 };
 
 // Threshold for refilling restaurants array (percentage)
 export const REFILL_THRESHOLD = 0.2;
+
+// API Key for Google Maps
+export const GOOGLE_MAPS_API_KEY = 'AIzaSyBhiG6J4HBexqPKFHKpmDDzhS48EAd3UxE';
+
+// Default zoom level for Google Maps
+export const DEFAULT_MAP_ZOOM = 14;
