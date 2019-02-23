@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
 
+import Map from './Map';
 import './App.css';
 import { BASE_SERVER_URL, LIMIT, RESTAURANT_RESET, REFILL_THRESHOLD } from '../utils/config';
 import Logger from '../utils/logger';
@@ -231,7 +232,7 @@ class App extends Component {
       // Random number used to pick random restaurant from restaurant array in state
       const randomNumber = getRandomNumber(restaurants.length, 0);
       const restaurant = restaurants[randomNumber];
-      const { id, name, rating, location } = restaurant;
+      const { id, name, rating, location, coordinates } = restaurant;
 
       prevRestaurants.push(id);
 
@@ -242,8 +243,12 @@ class App extends Component {
         prevState => ({
           restaurant: {
             name,
-            rating,
-            location: location.address1
+            coords: {
+              lat: coordinates.latitude,
+              lng: coordinates.longitude
+            },
+            location: location.address1,
+            rating
           },
           // Filters out current restaurant from potential restaurants
           restaurants: prevState.restaurants.filter((_, i) => i !== randomNumber),
@@ -268,14 +273,14 @@ class App extends Component {
           <div className="App">
             <h2>{restaurant.name}</h2>
             <h2>
-              Rating:&nbsp;
-              {restaurant.rating}
-              /5
+              {/* eslint-disable-next-line */}
+              Rating: {restaurant.rating}/5
             </h2>
             <h2>
-              Address:&nbsp;
-              {restaurant.location}
+              {/* eslint-disable-next-line */}
+              Address: {restaurant.location}
             </h2>
+            <Map restaurantCoords={restaurant.coords} />
             <Button onClick={this.getNextRestaurant} variant="contained" color="primary">
               Shuffle
             </Button>
