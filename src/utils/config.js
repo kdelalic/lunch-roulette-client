@@ -9,7 +9,7 @@ export const BASE_SERVER_URL = DEVELOPMENT_MODE
 export const LIMIT = 50;
 
 // Maximum offset until it resets back to 0
-export const RESTAURANT_RESET = 900;
+export const RESTAURANT_RESET = 500;
 
 // Highest logger level to use
 export const LOGGER_LEVEL = process.env.LOGGER_LEVEL || 'info';
@@ -17,7 +17,7 @@ export const LOGGER_LEVEL = process.env.LOGGER_LEVEL || 'info';
 // Logger levels to use
 export const LOGGER_LEVELS = { error: 0, warn: 1, info: 2, trace: 3, debug: 4 };
 
-// Threshold for refilling restaurants array (percentage)
+// Threshold for refilling restaurants array (percentage of LIMIT)
 export const REFILL_THRESHOLD = 0.2;
 
 // API Key for Google Maps
