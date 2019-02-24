@@ -244,8 +244,8 @@ class App extends Component {
           restaurant: {
             name,
             coords: {
-              lat: coordinates.latitude,
-              lng: coordinates.longitude
+              latitude: coordinates.latitude,
+              longitude: coordinates.longitude
             },
             location: location.address1,
             rating
@@ -280,7 +280,7 @@ class App extends Component {
               {/* eslint-disable-next-line */}
               Address: {restaurant.location}
             </h2>
-            <Map restaurantCoords={restaurant.coords} />
+            <Map restaurantCoords={restaurant.coords} userCoords={coords} />
             <Button onClick={this.getNextRestaurant} variant="contained" color="primary">
               Shuffle
             </Button>
