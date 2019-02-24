@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Logger from '../utils/logger';
+import PropTypes from 'prop-types';
 
 import userMarker from '../images/user-marker.png';
 import restaurantMarker from '../images/restaurant-marker.png';
@@ -7,18 +7,21 @@ import restaurantMarker from '../images/restaurant-marker.png';
 import './Marker.css';
 
 class Marker extends Component {
-  constructor(props) {
-    super(props);
+  static defaultProps = {
+    type: 'restaurant'
+  };
 
-    this.logger = new Logger();
-  }
+  static propTypes = {
+    type: PropTypes.string
+  };
 
   render() {
+    const { type } = this.props;
     let image;
 
-    if (this.props.user) {
+    if (type === 'user') {
       image = <img alt="User Location" src={userMarker} className="userMarker" />;
-    } else if (this.props.restaurant) {
+    } else if (type === 'restaurant') {
       image = <img alt="Restaurant Location" src={restaurantMarker} className="restaurantMarker" />;
     }
 
