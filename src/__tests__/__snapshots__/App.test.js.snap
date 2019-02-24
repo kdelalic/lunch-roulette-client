@@ -4,7 +4,11 @@ exports[`renders without crashing 1`] = `
 <div
   className="App"
 >
+  <h1>
+    Lunch Roulette
+  </h1>
   <WithStyles(Button)
+    className="actionButton"
     color="primary"
     id="show-restaurants"
     onClick={[Function]}

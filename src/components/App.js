@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
 
-import Map from './Map';
+import Restaurant from './Restaurant';
 import './App.css';
 import { BASE_SERVER_URL, LIMIT, RESTAURANT_RESET, REFILL_THRESHOLD } from '../utils/config';
 import Logger from '../utils/logger';
@@ -263,43 +263,29 @@ class App extends Component {
 
   render() {
     const { message, restaurants } = this.state;
+    let body = <h2 id="message">{message}</h2>;
 
     if (!message || restaurants.length > 0) {
       const { coords, restaurant } = this.state;
 
       if (restaurant) {
         // State where there is a restaurant loaded
-        return (
-          <div className="App">
-            <h2>{restaurant.name}</h2>
-            <h2>
-              {/* eslint-disable-next-line */}
-              Rating: {restaurant.rating}/5
-            </h2>
-            <h2>
-              {/* eslint-disable-next-line */}
-              Address: {restaurant.location}
-            </h2>
-            <Map restaurantCoords={restaurant.coords} userCoords={coords} />
-            <Button onClick={this.getNextRestaurant} variant="contained" color="primary">
-              Shuffle
-            </Button>
-          </div>
+        body = (
+          <Restaurant restaurantInfo={restaurant} getNextRestaurant={this.getNextRestaurant} />
         );
       }
       if (!coords) {
         // Initial state
-        return (
-          <div className="App">
-            <Button
-              id="show-restaurants"
-              onClick={this.getLocation}
-              variant="contained"
-              color="primary"
-            >
-              Show nearby restaurants
-            </Button>
-          </div>
+        body = (
+          <Button
+            id="show-restaurants"
+            className="actionButton"
+            onClick={this.getLocation}
+            variant="contained"
+            color="primary"
+          >
+            Show nearby restaurants
+          </Button>
         );
       }
     }
@@ -307,7 +293,8 @@ class App extends Component {
     // Message displaying state
     return (
       <div className="App">
-        <h2 id="message">{message}</h2>
+        <h1>Lunch Roulette</h1>
+        {body}
       </div>
     );
   }
