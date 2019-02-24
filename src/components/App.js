@@ -271,7 +271,11 @@ class App extends Component {
       if (restaurant) {
         // State where there is a restaurant loaded
         body = (
-          <Restaurant restaurantInfo={restaurant} getNextRestaurant={this.getNextRestaurant} />
+          <Restaurant
+            restaurantInfo={restaurant}
+            userCoords={coords}
+            getNextRestaurant={this.getNextRestaurant}
+          />
         );
       }
       if (!coords) {

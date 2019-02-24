@@ -6,7 +6,7 @@ import Map from './Map';
 import './Restaurant.css';
 
 const Restaurant = props => {
-  const { restaurantInfo, getNextRestaurant } = props;
+  const { restaurantInfo, getNextRestaurant, userCoords } = props;
   const { name, rating, location, coords } = restaurantInfo;
   return (
     <div className="Restaurant">
@@ -19,7 +19,7 @@ const Restaurant = props => {
         {/* eslint-disable-next-line */}
         Address: {location}
       </h2>
-      <Map restaurantCoords={coords} userCoords={coords} />
+      <Map restaurantCoords={coords} userCoords={userCoords} />
       <Button
         className="actionButton"
         onClick={getNextRestaurant}
@@ -36,12 +36,14 @@ const { string, number, objectOf, oneOfType } = PropTypes;
 
 Restaurant.defaultProps = {
   restaurantInfo: {},
-  getNextRestaurant: () => {}
+  getNextRestaurant: () => {},
+  userCoords: {}
 };
 
 Restaurant.propTypes = {
   restaurantInfo: objectOf(oneOfType([string, number, objectOf(number)])),
-  getNextRestaurant: PropTypes.func
+  getNextRestaurant: PropTypes.func,
+  userCoords: objectOf(number)
 };
 
 export default Restaurant;

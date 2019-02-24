@@ -27,14 +27,16 @@ const Map = props => {
   );
 };
 
+const { objectOf, number } = PropTypes;
+
 Map.defaultProps = {
   restaurantCoords: {},
   userCoords: {}
 };
 
 Map.propTypes = {
-  restaurantCoords: PropTypes.objectOf(PropTypes.number),
-  userCoords: PropTypes.objectOf(PropTypes.number)
+  restaurantCoords: objectOf(number),
+  userCoords: objectOf(number)
 };
 
 export default Map;
