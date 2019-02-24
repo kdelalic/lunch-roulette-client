@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import GoogleMapReact from 'google-map-react';
 
+import Marker from './Marker';
 import './Map.css';
 import { DEFAULT_MAP_ZOOM, GOOGLE_MAPS_API_KEY } from '../utils/config';
 import Logger from '../utils/logger';
 
 class Map extends Component {
   static defaultProps = {
-    restaurantCoords: {}
+    restaurantCoords: {},
+    userCoords: {}
   };
 
   static propTypes = {
-    restaurantCoords: PropTypes.objectOf(PropTypes.number)
+    restaurantCoords: PropTypes.objectOf(PropTypes.number),
+    userCoords: PropTypes.objectOf(PropTypes.number)
   };
 
   constructor(props) {
@@ -22,15 +25,18 @@ class Map extends Component {
   }
 
   render() {
-    const { restaurantCoords } = this.props;
+    const { restaurantCoords, userCoords } = this.props;
 
     return (
       <div className="MapComponent">
         <GoogleMapReact
           bootstrapURLKeys={{ key: GOOGLE_MAPS_API_KEY }}
-          center={restaurantCoords}
+          center={[restaurantCoords.latitude, restaurantCoords.longitude]}
           defaultZoom={DEFAULT_MAP_ZOOM}
-        />
+        >
+          <Marker restaurant lat={restaurantCoords.latitude} lng={restaurantCoords.longitude} />
+          <Marker user lat={userCoords.latitude} lng={userCoords.longitude} />
+        </GoogleMapReact>
       </div>
     );
   }
