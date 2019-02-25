@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Button } from '@material-ui/core';
+import React, { Component, Fragment } from 'react';
+import { Button, CircularProgress } from '@material-ui/core';
 import axios from 'axios';
 
 import Restaurant from './Restaurant';
@@ -263,7 +263,7 @@ class App extends Component {
 
   render() {
     const { message, restaurants } = this.state;
-    let body = <h2 id="message">{message}</h2>;
+    let body;
 
     if (!message || restaurants.length > 0) {
       const { coords, restaurant } = this.state;
@@ -271,33 +271,50 @@ class App extends Component {
       if (restaurant) {
         // State where there is a restaurant loaded
         body = (
-          <Restaurant
-            restaurantInfo={restaurant}
-            userCoords={coords}
-            getNextRestaurant={this.getNextRestaurant}
-          />
+          <Fragment>
+            <Restaurant restaurantInfo={restaurant} userCoords={coords} />
+            <Button
+              className="actionButton"
+              onClick={this.getNextRestaurant}
+              variant="contained"
+              color="primary"
+            >
+              Shuffle
+            </Button>
+          </Fragment>
         );
       }
       if (!coords) {
         // Initial state
         body = (
-          <Button
-            id="show-restaurants"
-            className="actionButton"
-            onClick={this.getLocation}
-            variant="contained"
-            color="primary"
-          >
-            Show nearby restaurants
-          </Button>
+          <div className="initialState">
+            <Button
+              id="show-restaurants"
+              className="actionButton"
+              onClick={this.getLocation}
+              variant="contained"
+              color="primary"
+            >
+              Show nearby restaurants
+            </Button>
+          </div>
         );
       }
+    } else {
+      body = (
+        <div className="messageState">
+          <CircularProgress className="circularProgress" />
+          <h2 id="message">{message}</h2>
+        </div>
+      );
     }
 
     // Message displaying state
     return (
       <div className="App">
-        <h1>Lunch Roulette</h1>
+        <div className="logo">
+          <h1>Lunch Roulette</h1>
+        </div>
         {body}
       </div>
     );
