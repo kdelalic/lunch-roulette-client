@@ -4,17 +4,25 @@ exports[`renders without crashing 1`] = `
 <div
   className="App"
 >
-  <h1>
-    Lunch Roulette
-  </h1>
-  <WithStyles(Button)
-    className="actionButton"
-    color="primary"
-    id="show-restaurants"
-    onClick={[Function]}
-    variant="contained"
+  <div
+    className="logo"
   >
-    Show nearby restaurants
-  </WithStyles(Button)>
+    <h1>
+      Lunch Roulette
+    </h1>
+  </div>
+  <div
+    className="initialState"
+  >
+    <WithStyles(Button)
+      className="actionButton"
+      color="primary"
+      id="show-restaurants"
+      onClick={[Function]}
+      variant="contained"
+    >
+      Show nearby restaurants
+    </WithStyles(Button)>
+  </div>
 </div>
 `;
