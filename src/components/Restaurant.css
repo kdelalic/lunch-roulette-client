@@ -1,3 +1,12 @@
 .Restaurant {
   width: 100%;
 }
+
+.Restaurant h2,
+h3 {
+  margin: 5px;
+}
+
+.Restaurant .name .rating {
+  margin-left: 10px;
+}

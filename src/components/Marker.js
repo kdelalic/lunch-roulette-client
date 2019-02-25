@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import userMarker from '../images/user-marker.png';
-import restaurantMarker from '../images/restaurant-marker.png';
+import userMarker from '../images/map_assets/user-marker.png';
+import restaurantMarker from '../images/map_assets/restaurant-marker.png';
 
 import './Marker.css';
 
