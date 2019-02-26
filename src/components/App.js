@@ -232,7 +232,9 @@ class App extends Component {
       // Random number used to pick random restaurant from restaurant array in state
       const randomNumber = getRandomNumber(restaurants.length, 0);
       const restaurant = restaurants[randomNumber];
-      const { id, name, rating, location, coordinates } = restaurant;
+
+      // eslint-disable-next-line camelcase
+      const { id, name, rating, location, coordinates, image_url } = restaurant;
 
       prevRestaurants.push(id);
 
@@ -248,7 +250,8 @@ class App extends Component {
               longitude: coordinates.longitude
             },
             location: location.address1,
-            rating
+            rating,
+            imageURL: image_url
           },
           // Filters out current restaurant from potential restaurants
           restaurants: prevState.restaurants.filter((_, i) => i !== randomNumber),

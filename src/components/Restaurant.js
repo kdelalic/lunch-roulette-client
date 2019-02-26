@@ -1,6 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Collapse, FormControlLabel, Switch } from '@material-ui/core';
+import {
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Collapse,
+  IconButton,
+  Typography
+} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Map from './Map';
 import './Restaurant.css';
@@ -17,52 +27,69 @@ const starAssetSrc = rating => {
   return starAssets(`./regular_${fileName}.png`);
 };
 
-class Restaurant extends Component {
-  constructor(props) {
-    super(props);
+const Restaurant = props => {
+  const [showMap, setShowMap] = React.useState(false);
 
-    this.state = {
-      showMap: false
-    };
-  }
-
-  toggleShowMap = () => event => {
-    this.setState({ showMap: event.target.checked });
+  const toggleShowMap = () => {
+    setShowMap(!showMap);
   };
+  const { restaurantInfo, userCoords } = props;
+  const { name, rating, coords, imageURL } = restaurantInfo;
 
-  render() {
-    const { showMap } = this.state;
-    const { restaurantInfo, userCoords } = this.props;
-    const { name, rating, location, coords } = restaurantInfo;
-    return (
-      <div className="Restaurant">
-        <h2 className="name">
-          {name}
-          <img className="rating" alt={`${rating}/5 Stars`} src={starAssetSrc(rating)} />
-        </h2>
-        <h3>
-          {/* eslint-disable-next-line */}
-          Address: {location}
-        </h3>
-        <FormControlLabel
-          control={
-            // eslint-disable-next-line react/jsx-wrap-multilines
-            <Switch
-              checked={showMap}
-              onChange={this.toggleShowMap()}
-              value="showMap"
-              color="primary"
-            />
-          }
-          label="Show map"
-        />
-        <Collapse in={showMap}>
-          <Map restaurantCoords={coords} userCoords={userCoords} />
-        </Collapse>
-      </div>
-    );
-  }
-}
+  return (
+    <Card className="restaurantCard">
+      <CardHeader
+        title={name}
+        subheader={<img className="rating" alt={`${rating}/5 Stars`} src={starAssetSrc(rating)} />}
+      />
+      <CardMedia className="restaurantMedia" image={imageURL} title="Paella dish" />
+      <CardContent>
+        <Typography component="p">
+          This impressive paella is a perfect party dish and a fun meal to cook together with your
+          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+        </Typography>
+      </CardContent>
+      <CardActions className="actions" disableActionSpacing>
+        <IconButton
+          className={`expand ${showMap ? 'showMap' : 'hideMap'}`}
+          onClick={toggleShowMap}
+          aria-expanded={showMap}
+          aria-label="Show more"
+        >
+          <ExpandMoreIcon />
+        </IconButton>
+      </CardActions>
+      <Collapse in={showMap}>
+        <Map restaurantCoords={coords} userCoords={userCoords} />
+      </Collapse>
+    </Card>
+    // <div className="Restaurant">
+    //   <h2 className="name">
+    //     {name}
+    //     <img className="rating" alt={`${rating}/5 Stars`} src={starAssetSrc(rating)} />
+    //   </h2>
+    //   <h3>
+    //     {/* eslint-disable-next-line */}
+    //     Address: {location}
+    //   </h3>
+    //   <FormControlLabel
+    //     control={
+    //       // eslint-disable-next-line react/jsx-wrap-multilines
+    //       <Switch
+    //         checked={showMap}
+    //         onChange={this.toggleShowMap()}
+    //         value="showMap"
+    //         color="primary"
+    //       />
+    //     }
+    //     label="Show map"
+    //   />
+    //   <Collapse in={showMap}>
+    //     <Map restaurantCoords={coords} userCoords={userCoords} />
+    //   </Collapse>
+    // </div>
+  );
+};
 
 const { string, number, objectOf, oneOfType } = PropTypes;
 

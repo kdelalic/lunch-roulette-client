@@ -1,5 +1,5 @@
-.Restaurant {
-  width: 100%;
+.restaurantCard {
+  max-width: 500px;
 }
 
 .Restaurant h2,
@@ -9,4 +9,25 @@ h3 {
 
 .Restaurant .name .rating {
   margin-left: 10px;
+}
+
+.restaurantMedia {
+  height: 0;
+  padding-top: 56.25%;
+}
+
+.expand svg {
+  transition: transform 0.15s ease;
+}
+
+.showMap svg {
+  transform: rotate(180deg);
+}
+
+.actions {
+  display: flex;
+}
+
+.avatar {
+  background-color: red;
 }
