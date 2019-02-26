@@ -1,19 +1,19 @@
 .restaurantCard {
-  max-width: 500px;
-}
-
-.Restaurant h2,
-h3 {
-  margin: 5px;
-}
-
-.Restaurant .name .rating {
-  margin-left: 10px;
+  width: 500px;
 }
 
 .restaurantMedia {
   height: 0;
   padding-top: 56.25%;
+}
+
+.restaurantContent {
+  display: flex;
+}
+
+.restaurantContent .categoryChip {
+  margin: 0 7px;
+  background-image: linear-gradient(to top right, #ff834a, #ffb371);
 }
 
 .expand svg {
@@ -26,8 +26,4 @@ h3 {
 
 .actions {
   display: flex;
-}
-
-.avatar {
-  background-color: red;
 }

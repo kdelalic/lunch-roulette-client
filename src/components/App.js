@@ -233,26 +233,16 @@ class App extends Component {
       const randomNumber = getRandomNumber(restaurants.length, 0);
       const restaurant = restaurants[randomNumber];
 
-      // eslint-disable-next-line camelcase
-      const { id, name, rating, location, coordinates, image_url } = restaurant;
+      prevRestaurants.push(restaurant.id);
 
-      prevRestaurants.push(id);
+      console.log(restaurant);
 
       // Updates previous restaurants in local storage
       window.localStorage.setItem('prevRestaurants', JSON.stringify(prevRestaurants));
 
       this.setState(
         prevState => ({
-          restaurant: {
-            name,
-            coords: {
-              latitude: coordinates.latitude,
-              longitude: coordinates.longitude
-            },
-            location: location.address1,
-            rating,
-            imageURL: image_url
-          },
+          restaurant,
           // Filters out current restaurant from potential restaurants
           restaurants: prevState.restaurants.filter((_, i) => i !== randomNumber),
           prevRestaurants
