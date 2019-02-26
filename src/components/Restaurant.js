@@ -8,7 +8,7 @@ import {
   CardActions,
   Collapse,
   IconButton,
-  Typography
+  Chip
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -34,7 +34,7 @@ const Restaurant = props => {
     setShowMap(!showMap);
   };
   const { restaurantInfo, userCoords } = props;
-  const { name, rating, coords, imageURL } = restaurantInfo;
+  const { name, rating, coordinates, image_url: imageURL, categories } = restaurantInfo;
 
   return (
     <Card className="restaurantCard">
@@ -43,11 +43,10 @@ const Restaurant = props => {
         subheader={<img className="rating" alt={`${rating}/5 Stars`} src={starAssetSrc(rating)} />}
       />
       <CardMedia className="restaurantMedia" image={imageURL} title="Paella dish" />
-      <CardContent>
-        <Typography component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
-        </Typography>
+      <CardContent className="restaurantContent">
+        {categories.map(category => {
+          return <Chip label={category.title} className="categoryChip" />;
+        })}
       </CardContent>
       <CardActions className="actions" disableActionSpacing>
         <IconButton
@@ -60,38 +59,13 @@ const Restaurant = props => {
         </IconButton>
       </CardActions>
       <Collapse in={showMap}>
-        <Map restaurantCoords={coords} userCoords={userCoords} />
+        <Map restaurantCoords={coordinates} userCoords={userCoords} />
       </Collapse>
     </Card>
-    // <div className="Restaurant">
-    //   <h2 className="name">
-    //     {name}
-    //     <img className="rating" alt={`${rating}/5 Stars`} src={starAssetSrc(rating)} />
-    //   </h2>
-    //   <h3>
-    //     {/* eslint-disable-next-line */}
-    //     Address: {location}
-    //   </h3>
-    //   <FormControlLabel
-    //     control={
-    //       // eslint-disable-next-line react/jsx-wrap-multilines
-    //       <Switch
-    //         checked={showMap}
-    //         onChange={this.toggleShowMap()}
-    //         value="showMap"
-    //         color="primary"
-    //       />
-    //     }
-    //     label="Show map"
-    //   />
-    //   <Collapse in={showMap}>
-    //     <Map restaurantCoords={coords} userCoords={userCoords} />
-    //   </Collapse>
-    // </div>
   );
 };
 
-const { string, number, objectOf, oneOfType } = PropTypes;
+const { string, number, objectOf, oneOfType, bool, array } = PropTypes;
 
 Restaurant.defaultProps = {
   restaurantInfo: {},
@@ -99,7 +73,17 @@ Restaurant.defaultProps = {
 };
 
 Restaurant.propTypes = {
-  restaurantInfo: objectOf(oneOfType([string, number, objectOf(number)])),
+  restaurantInfo: objectOf(
+    oneOfType([
+      array,
+      bool,
+      string,
+      number,
+      objectOf(number),
+      objectOf(string),
+      objectOf(oneOfType(string, array, number))
+    ])
+  ),
   userCoords: objectOf(number)
 };
 
