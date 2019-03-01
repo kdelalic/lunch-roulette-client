@@ -34,3 +34,8 @@
 .App .actionButton {
   width: fit-content;
 }
+
+.App .shuffleButton {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}

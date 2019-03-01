@@ -267,7 +267,7 @@ class App extends Component {
           <Fragment>
             <Restaurant restaurantInfo={restaurant} userCoords={coords} />
             <Button
-              className="actionButton"
+              className="actionButton shuffleButton"
               onClick={this.getNextRestaurant}
               variant="contained"
               color="primary"
