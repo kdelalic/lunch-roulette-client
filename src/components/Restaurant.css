@@ -1,18 +1,57 @@
 .Restaurant {
   height: 100%;
   flex-grow: 2;
+  width: 500px;
+  background-color: #f4f4f4;
+}
+
+.Restaurant .header {
+  padding: 20px 15px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.Restaurant .header h2 {
+  margin: 0;
+  text-align: left;
+}
+
+.Restaurant .header img {
+  width: 25px;
+  vertical-align: text-top;
+  margin-left: 5px;
+}
+
+.Restaurant .container {
+  padding: 10px 15px;
 }
 
 .Restaurant .media {
-  height: 0;
-  padding-top: 56.25%;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  position: relative;
+}
+
+.Restaurant .media img {
+  max-width: 100%;
+  min-height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .Restaurant .content {
+  padding: 15px;
+}
+
+.Restaurant .content .categories {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .Restaurant .content .categoryChip {
-  margin: 0 7px;
+  margin: 3px 7px;
   background-image: linear-gradient(to top right, #ff834a, #ffb371);
 }
