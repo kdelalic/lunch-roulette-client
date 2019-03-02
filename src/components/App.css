@@ -1,21 +1,9 @@
 .App {
   text-align: center;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-}
-
-.App .logo {
-  background-image: linear-gradient(to top right, #ff834a, #ffb371);
-  margin: 10px;
-  border-radius: 50px;
-}
-
-.App .logo h1 {
-  font-family: 'Righteous', cursive;
-  padding: 15px 25px;
-  color: black;
-  margin: 0;
+  height: 100%;
 }
 
 .App .messageState {

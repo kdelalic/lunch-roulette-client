@@ -6,13 +6,12 @@ import {
   CardMedia,
   CardContent,
   CardActions,
-  Collapse,
   IconButton,
-  Chip
+  Chip,
+  Paper
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import Map from './Map';
 import './Restaurant.css';
 
 const starAssets = require.context('../images/yelp_assets/stars/web_and_ios/regular/', true);
@@ -33,44 +32,26 @@ const Restaurant = props => {
   const toggleShowMap = () => {
     setShowMap(!showMap);
   };
-  const { restaurantInfo, userCoords } = props;
-  const { name, rating, coordinates, image_url: imageURL, categories } = restaurantInfo;
+  const { restaurantInfo } = props;
+  const { name, rating, image_url: imageURL, categories } = restaurantInfo;
 
   return (
-    <Card className="restaurantCard">
-      <CardHeader
-        title={name}
-        subheader={<img className="rating" alt={`${rating}/5 Stars`} src={starAssetSrc(rating)} />}
-      />
-      <CardMedia className="restaurantMedia" image={imageURL} title="Paella dish" />
-      <CardContent className="restaurantContent">
+    <Paper className="Restaurant">
+      <div className="header">
+        <h2>{name}</h2>
+        <img className="rating" alt={`${rating}/5 Stars`} src={starAssetSrc(rating)} />
+      </div>
+      <img className="media" src={imageURL} alt={name} />
+      <div className="content">
         {categories.map(category => {
           return <Chip label={category.title} className="categoryChip" />;
         })}
-      </CardContent>
-      <CardActions className="actions" disableActionSpacing>
-        <IconButton
-          className={`expand ${showMap ? 'showMap' : 'hideMap'}`}
-          onClick={toggleShowMap}
-          aria-expanded={showMap}
-          aria-label="Show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={showMap}>
-        <Map restaurantCoords={coordinates} userCoords={userCoords} />
-      </Collapse>
-    </Card>
+      </div>
+    </Paper>
   );
 };
 
 const { string, number, objectOf, oneOfType, bool, array } = PropTypes;
-
-Restaurant.defaultProps = {
-  restaurantInfo: {},
-  userCoords: {}
-};
 
 Restaurant.propTypes = {
   restaurantInfo: objectOf(
@@ -83,8 +64,7 @@ Restaurant.propTypes = {
       objectOf(string),
       objectOf(oneOfType(string, array, number))
     ])
-  ),
-  userCoords: objectOf(number)
+  ).isRequired
 };
 
 export default Restaurant;
