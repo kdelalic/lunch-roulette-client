@@ -3,6 +3,8 @@ import { Button, CircularProgress } from '@material-ui/core';
 import axios from 'axios';
 
 import Restaurant from './Restaurant';
+import Map from './Map';
+import OptionsPanel from './OptionsPanel';
 import './App.css';
 import { BASE_SERVER_URL, LIMIT, RESTAURANT_RESET, REFILL_THRESHOLD } from '../utils/config';
 import Logger from '../utils/logger';
@@ -265,15 +267,9 @@ class App extends Component {
         // State where there is a restaurant loaded
         body = (
           <Fragment>
-            <Restaurant restaurantInfo={restaurant} userCoords={coords} />
-            <Button
-              className="actionButton shuffleButton"
-              onClick={this.getNextRestaurant}
-              variant="contained"
-              color="primary"
-            >
-              Shuffle
-            </Button>
+            <OptionsPanel getNextRestaurant={this.getNextRestaurant} />
+            <Map restaurantCoords={restaurant.coordinates} userCoords={coords} />
+            <Restaurant restaurantInfo={restaurant} />
           </Fragment>
         );
       }
@@ -294,6 +290,7 @@ class App extends Component {
         );
       }
     } else {
+      // Message state
       body = (
         <div className="messageState">
           <CircularProgress className="circularProgress" />
@@ -302,15 +299,7 @@ class App extends Component {
       );
     }
 
-    // Message displaying state
-    return (
-      <div className="App">
-        <div className="logo">
-          <h1>Lunch Roulette</h1>
-        </div>
-        {body}
-      </div>
-    );
+    return <div className="App">{body}</div>;
   }
 }
 
