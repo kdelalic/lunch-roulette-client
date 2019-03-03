@@ -2,9 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { Button, CircularProgress } from '@material-ui/core';
 import axios from 'axios';
 
-import Restaurant from './Restaurant';
+import OptionPanel from './OptionPanel';
 import Map from './Map';
-import OptionsPanel from './OptionsPanel';
+import RestaurantPanel from './RestaurantPanel';
 import './App.css';
 import { BASE_SERVER_URL, LIMIT, RESTAURANT_RESET, REFILL_THRESHOLD } from '../utils/config';
 import Logger from '../utils/logger';
@@ -267,9 +267,9 @@ class App extends Component {
         // State where there is a restaurant loaded
         body = (
           <Fragment>
-            <OptionsPanel getNextRestaurant={this.getNextRestaurant} />
+            <OptionPanel getNextRestaurant={this.getNextRestaurant} />
             <Map restaurantCoords={restaurant.coordinates} userCoords={coords} />
-            <Restaurant restaurantInfo={restaurant} />
+            <RestaurantPanel restaurantInfo={restaurant} />
           </Fragment>
         );
       }

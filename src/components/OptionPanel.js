@@ -2,13 +2,13 @@ import React from 'react';
 import { Button, Paper } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
-import './OptionsPanel.css';
+import './OptionPanel.css';
 
-const OptionsPanel = props => {
+const OptionPanel = props => {
   const { getNextRestaurant } = props;
 
   return (
-    <Paper className="OptionsPanel" elevation={1}>
+    <Paper className="OptionPanel" elevation={2}>
       <div className="logo">
         <h1>Lunch Roulette</h1>
       </div>
@@ -24,8 +24,8 @@ const OptionsPanel = props => {
   );
 };
 
-OptionsPanel.propTypes = {
+OptionPanel.propTypes = {
   getNextRestaurant: PropTypes.func.isRequired
 };
 
-export default OptionsPanel;
+export default OptionPanel;
