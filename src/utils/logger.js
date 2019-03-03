@@ -31,9 +31,9 @@ export default class Logger {
     }
   };
 
-  trace = (message, ...data) => {
+  verbose = (message, ...data) => {
     if (DEVELOPMENT_MODE) {
-      this.logger.trace(formatTemplate(message, ...data));
+      this.logger.verbose(formatTemplate(message, ...data));
     }
   };
 
