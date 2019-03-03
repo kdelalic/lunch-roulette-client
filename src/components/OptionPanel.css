@@ -1,16 +1,17 @@
-.OptionsPanel {
+.OptionPanel {
   height: 100%;
   flex-grow: 1;
   background-color: #f4f4f4;
+  z-index: 2;
 }
 
-.OptionsPanel .logo {
+.logo {
   background-image: linear-gradient(to top right, #ff834a, #ffb371);
   margin: 10px;
   border-radius: 50px;
 }
 
-.OptionsPanel .logo h1 {
+.logo h1 {
   font-family: 'Righteous', cursive;
   padding: 15px 25px;
   color: black;
