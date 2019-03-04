@@ -5,26 +5,14 @@ import { Collapse, Chip, Fab, Paper } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { throttle } from 'throttle-debounce';
 
-import YelpBurst from '../images/yelp_assets/burst/Yelp_burst_positive_RGB.png';
-
 import Review from './Review';
+import YelpBurst from '../images/yelp_assets/burst/Yelp_burst_positive_RGB.png';
+import { getStarAssetSrc } from '../utils/common';
 import Logger from '../utils/logger';
 import { BASE_SERVER_URL } from '../utils/config';
 import './RestaurantPanel.css';
 
 const containerElevation = 1;
-
-const starAssets = require.context('../images/yelp_assets/stars/web_and_ios/large/', true);
-
-const starAssetSrc = rating => {
-  let fileName;
-  if (rating - Math.floor(rating) !== 0) {
-    fileName = `${Math.floor(rating)}_half`;
-  } else {
-    fileName = rating;
-  }
-  return starAssets(`./large_${fileName}.png`);
-};
 
 class RestaurantPanel extends Component {
   logger = new Logger();
@@ -89,7 +77,7 @@ class RestaurantPanel extends Component {
           <Paper elevation={containerElevation}>
             <div className="ratingPrice">
               <div className="rating">
-                <img alt={`${rating}/5 Stars`} src={starAssetSrc(rating)} />
+                <img alt={`${rating}/5 Stars`} src={getStarAssetSrc(rating)} />
                 <span>{`${reviewCount} reviews`}</span>
               </div>
               <div className="price">{price}</div>
@@ -103,19 +91,19 @@ class RestaurantPanel extends Component {
             </div>
           </Paper>
         </div>
+        <Fab
+          size="small"
+          onMouseOver={throttle(1000, this.loadReviews)}
+          onFocus={throttle(1000, this.loadReviews)}
+          onClick={this.showReviews}
+          variant="extended"
+          aria-label="Reviews"
+          className="viewReviews"
+        >
+          View Reviews
+          <ExpandMoreIcon className={`icon ${expandReviews && 'rotatedIcon'}`} />
+        </Fab>
         <div className="reviews">
-          <Fab
-            size="small"
-            onMouseOver={throttle(1000, this.loadReviews)}
-            onFocus={throttle(1000, this.loadReviews)}
-            onClick={this.showReviews}
-            variant="extended"
-            aria-label="Reviews"
-            className="viewReviews"
-          >
-            View Reviews
-            <ExpandMoreIcon className={`icon ${expandReviews && 'rotatedIcon'}`} />
-          </Fab>
           <Paper elevation={containerElevation}>
             <Collapse in={expandReviews}>
               {reviews.map(review => {

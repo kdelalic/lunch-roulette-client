@@ -8,7 +8,7 @@ import RestaurantPanel from './RestaurantPanel';
 import './App.css';
 import { BASE_SERVER_URL, LIMIT, RESTAURANT_RESET, REFILL_THRESHOLD } from '../utils/config';
 import Logger from '../utils/logger';
-import getRandomNumber from '../utils/common';
+import { getRandomNumber } from '../utils/common';
 import messages from '../messages/en';
 
 class App extends Component {
