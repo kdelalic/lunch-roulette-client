@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Button, Chip, Paper } from '@material-ui/core';
+import { Collapse, Chip, Fab, Paper } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { throttle } from 'throttle-debounce';
+
 import YelpBurst from '../images/yelp_assets/burst/Yelp_burst_positive_RGB.png';
 
 import Review from './Review';
@@ -27,27 +30,36 @@ class RestaurantPanel extends Component {
   logger = new Logger();
 
   state = {
-    reviews: undefined
+    reviews: [],
+    expandReviews: false
+  };
+
+  showReviews = () => {
+    this.setState(prevState => ({ expandReviews: !prevState.expandReviews }));
   };
 
   loadReviews = () => {
     const { restaurantInfo } = this.props;
-    axios
-      .get(`${BASE_SERVER_URL}/api/reviews/${restaurantInfo.id}`)
-      .then(res => {
-        console.log(res.data.reviews);
-        this.setState({
-          reviews: res.data.reviews
+    const { reviews } = this.state;
+
+    if (reviews.length <= 0) {
+      axios
+        .get(`${BASE_SERVER_URL}/api/reviews/${restaurantInfo.id}`)
+        .then(res => {
+          console.log(res.data.reviews);
+          this.setState({
+            reviews: res.data.reviews
+          });
+        })
+        .catch(err => {
+          this.logger.error('loadReviews', err);
         });
-      })
-      .catch(err => {
-        this.logger.error('loadReviews', err);
-      });
+    }
   };
 
   render() {
     const { restaurantInfo } = this.props;
-    const { reviews } = this.state;
+    const { reviews, expandReviews } = this.state;
     const {
       name,
       rating,
@@ -92,22 +104,24 @@ class RestaurantPanel extends Component {
           </Paper>
         </div>
         <div className="reviews">
+          <Fab
+            size="small"
+            onMouseOver={throttle(1000, this.loadReviews)}
+            onFocus={throttle(1000, this.loadReviews)}
+            onClick={this.showReviews}
+            variant="extended"
+            aria-label="Reviews"
+            className="viewReviews"
+          >
+            View Reviews
+            <ExpandMoreIcon className={`icon ${expandReviews && 'rotatedIcon'}`} />
+          </Fab>
           <Paper elevation={containerElevation}>
-            {reviews ? (
-              reviews.map(review => {
+            <Collapse in={expandReviews}>
+              {reviews.map(review => {
                 return <Review key={review.id} reviewInfo={review} />;
-              })
-            ) : (
-              <Button
-                id="load-reviews"
-                className="actionButton"
-                onClick={this.loadReviews}
-                variant="contained"
-                color="primary"
-              >
-                Load Reviews
-              </Button>
-            )}
+              })}
+            </Collapse>
           </Paper>
         </div>
       </Paper>
