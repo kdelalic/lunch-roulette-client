@@ -41,7 +41,7 @@ class App extends Component {
       // List of previous restaurants
       prevRestaurants = JSON.parse(window.localStorage.getItem('prevRestaurants'));
     } catch (err) {
-      this.logger.info('JSON.parse for prevRestaurants error', err);
+      this.logger.error('JSON.parse for prevRestaurants error', err);
     }
     this.logger.info('number of prevRestaurants', prevRestaurants ? prevRestaurants.length : 0);
 
@@ -117,7 +117,7 @@ class App extends Component {
                       this.getNextRestaurant();
                     })
                     .catch(err => {
-                      this.logger.info('fetchRestaurants', err);
+                      this.logger.error('fetchRestaurants', err);
                     });
                 }
               );
@@ -237,8 +237,6 @@ class App extends Component {
 
       prevRestaurants.push(restaurant.id);
 
-      console.log(restaurant);
-
       // Updates previous restaurants in local storage
       window.localStorage.setItem('prevRestaurants', JSON.stringify(prevRestaurants));
 
@@ -269,7 +267,7 @@ class App extends Component {
           <Fragment>
             <OptionPanel getNextRestaurant={this.getNextRestaurant} />
             <Map restaurantCoords={restaurant.coordinates} userCoords={coords} />
-            <RestaurantPanel restaurantInfo={restaurant} />
+            <RestaurantPanel key={restaurant.id} restaurantInfo={restaurant} />
           </Fragment>
         );
       }

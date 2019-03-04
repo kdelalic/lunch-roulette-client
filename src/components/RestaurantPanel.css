@@ -10,18 +10,18 @@
   padding: 10px 20px;
 }
 
-.header {
+.RestaurantPanel .header {
   margin-top: 10px;
   display: flex;
   align-items: center;
 }
 
-.header h2 {
+.RestaurantPanel .header h2 {
   margin: 0;
   text-align: left;
 }
 
-.header img {
+.RestaurantPanel .header img {
   width: 25px;
   vertical-align: text-top;
   margin-left: 5px;
@@ -29,7 +29,7 @@
 
 .media > div {
   width: 100%;
-  height: 250px;
+  height: 200px;
   overflow: hidden;
   position: relative;
 }
