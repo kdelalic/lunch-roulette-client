@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Avatar } from '@material-ui/core';
 
+import { getStarAssetSrc } from '../utils/common';
 import './Review.css';
 
 const Review = props => {
@@ -19,8 +20,14 @@ const Review = props => {
           <Avatar className="avatar">{firstLetter}</Avatar>
         )}
         {name}
+        <img className="reviewRating" alt={`${rating}/5 Stars`} src={getStarAssetSrc(rating)} />
       </div>
-      <div className="body">{text}</div>
+      <div className="body">
+        {text}
+        <a className="readMore" href={url} target="_blank" rel="noopener noreferrer">
+          Read more
+        </a>
+      </div>
     </div>
   );
 };
