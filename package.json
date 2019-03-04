@@ -13,6 +13,7 @@
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-scripts": "^2.1.5",
+    "throttle-debounce": "^2.1.0",
     "winston": "^3.2.1"
   },
   "scripts": {
