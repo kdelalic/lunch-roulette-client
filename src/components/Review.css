@@ -1,6 +1,25 @@
+.Review {
+  padding: 10px;
+}
+
 .avatar {
   color: #fff;
   background-image: linear-gradient(to top right, #ff834a, #ffb371);
   width: 25px;
   height: 25px;
+}
+
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.reviewHeader > div {
+  margin-right: 10px;
+}
+
+.Review .body {
+  text-align: left;
+  padding: 0 5px;
 }
