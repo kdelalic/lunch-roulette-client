@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Button, Chip, Paper } from '@material-ui/core';
-import Money from '@material-ui/icons/AttachMoney';
 import YelpBurst from '../images/yelp_assets/burst/Yelp_burst_positive_RGB.png';
 
 import Review from './Review';
@@ -37,6 +35,7 @@ class RestaurantPanel extends Component {
     axios
       .get(`${BASE_SERVER_URL}/api/reviews/${restaurantInfo.id}`)
       .then(res => {
+        console.log(res.data.reviews);
         this.setState({
           reviews: res.data.reviews
         });
@@ -81,15 +80,7 @@ class RestaurantPanel extends Component {
                 <img alt={`${rating}/5 Stars`} src={starAssetSrc(rating)} />
                 <span>{`${reviewCount} reviews`}</span>
               </div>
-              <div className="price">
-                {price ? (
-                  _.times(price.length, i => {
-                    return <Money viewBox="6 3 11 19" key={i} />;
-                  })
-                ) : (
-                  <div />
-                )}
-              </div>
+              <div className="price">{price}</div>
             </div>
             <div className="categories">
               {categories.map(category => {
