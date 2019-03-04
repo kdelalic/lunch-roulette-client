@@ -237,6 +237,8 @@ class App extends Component {
 
       prevRestaurants.push(restaurant.id);
 
+      console.log(restaurant);
+
       // Updates previous restaurants in local storage
       window.localStorage.setItem('prevRestaurants', JSON.stringify(prevRestaurants));
 
