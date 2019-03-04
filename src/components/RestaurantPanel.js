@@ -27,7 +27,7 @@ class RestaurantPanel extends Component {
   logger = new Logger();
 
   state = {
-    reviews: []
+    reviews: undefined
   };
 
   loadReviews = () => {
@@ -93,18 +93,21 @@ class RestaurantPanel extends Component {
         </div>
         <div className="reviews">
           <Paper elevation={containerElevation}>
-            {reviews.map(review => {
-              return <Review key={review.id} reviewInfo={review} />;
-            })}
-            <Button
-              id="load-reviews"
-              className="actionButton"
-              onClick={this.loadReviews}
-              variant="contained"
-              color="primary"
-            >
-              Load Reviews
-            </Button>
+            {reviews ? (
+              reviews.map(review => {
+                return <Review key={review.id} reviewInfo={review} />;
+              })
+            ) : (
+              <Button
+                id="load-reviews"
+                className="actionButton"
+                onClick={this.loadReviews}
+                variant="contained"
+                color="primary"
+              >
+                Load Reviews
+              </Button>
+            )}
           </Paper>
         </div>
       </Paper>

@@ -12,7 +12,7 @@ const Review = props => {
 
   return (
     <div className="Review">
-      <div className="header">
+      <div className="reviewHeader">
         {imageUrl ? (
           <Avatar alt={name} src={imageUrl} className="avatar" />
         ) : (
