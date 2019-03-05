@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Collapse, Chip, Fab, Paper } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { throttle } from 'throttle-debounce';
+import { Chip, Button, Paper } from '@material-ui/core';
 
 import Review from './Review';
 import YelpBurst from '../images/yelp_assets/burst/Yelp_burst_positive_RGB.png';
@@ -18,36 +16,45 @@ class RestaurantPanel extends Component {
   logger = new Logger();
 
   state = {
-    reviews: [],
-    expandReviews: false
+    reviews: null,
+    showReviews: false,
+    loadingReviews: false
   };
 
-  showReviews = () => {
-    this.setState(prevState => ({ expandReviews: !prevState.expandReviews }));
+  onViewReviews = () => {
+    this.setState({ showReviews: true });
   };
 
   loadReviews = () => {
     const { restaurantInfo } = this.props;
-    const { reviews } = this.state;
+    const { loadingReviews, reviews } = this.state;
 
-    if (reviews.length <= 0) {
-      axios
-        .get(`${BASE_SERVER_URL}/api/reviews/${restaurantInfo.id}`)
-        .then(res => {
-          console.log(res.data.reviews);
-          this.setState({
-            reviews: res.data.reviews
-          });
-        })
-        .catch(err => {
-          this.logger.error('loadReviews', err);
-        });
+    if (!reviews && !loadingReviews) {
+      this.setState(
+        {
+          loadingReviews: true
+        },
+        () => {
+          axios
+            .get(`${BASE_SERVER_URL}/api/reviews/${restaurantInfo.id}`)
+            .then(res => {
+              console.log(res.data.reviews);
+              this.setState({
+                reviews: res.data.reviews,
+                loadingReviews: false
+              });
+            })
+            .catch(err => {
+              this.logger.error('loadReviews', err);
+            });
+        }
+      );
     }
   };
 
   render() {
     const { restaurantInfo } = this.props;
-    const { reviews, expandReviews } = this.state;
+    const { reviews, showReviews } = this.state;
     const {
       name,
       rating,
@@ -91,25 +98,25 @@ class RestaurantPanel extends Component {
             </div>
           </Paper>
         </div>
-        <Fab
-          size="small"
-          onMouseOver={throttle(1000, this.loadReviews)}
-          onFocus={throttle(1000, this.loadReviews)}
-          onClick={this.showReviews}
-          variant="extended"
-          aria-label="Reviews"
-          className="viewReviews"
-        >
-          View Reviews
-          <ExpandMoreIcon className={`icon ${expandReviews && 'rotatedIcon'}`} />
-        </Fab>
         <div className="reviews">
           <Paper elevation={containerElevation}>
-            <Collapse in={expandReviews}>
-              {reviews.map(review => {
+            {showReviews && reviews ? (
+              reviews.map(review => {
                 return <Review key={review.id} reviewInfo={review} />;
-              })}
-            </Collapse>
+              })
+            ) : (
+              <Button
+                size="small"
+                onMouseOver={this.loadReviews}
+                onFocus={this.loadReviews}
+                onClick={this.onViewReviews}
+                variant="outlined"
+                aria-label="Reviews"
+                className="viewReviews"
+              >
+                View Latest Reviews
+              </Button>
+            )}
           </Paper>
         </div>
       </Paper>
