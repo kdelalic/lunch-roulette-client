@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -11,6 +10,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .initialState {
@@ -22,9 +24,17 @@
 
 .actionButton {
   width: fit-content;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .shuffleButton {
   margin-top: 20px;
   margin-bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo {
+  text-align: center;
 }

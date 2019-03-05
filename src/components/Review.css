@@ -23,10 +23,13 @@
   text-align: left;
   padding: 0 5px;
   font-size: 14px;
+  border-left: 2px solid orange;
+  margin-left: 10px;
 }
 
 .readMore {
   text-decoration: none;
+  margin-left: 4px;
 }
 
 .readMore:hover {
@@ -36,4 +39,9 @@
 .reviewRating {
   margin-left: auto;
   height: 15px;
+}
+
+.timeCreated {
+  margin-left: 5px;
+  font-size: 12px;
 }

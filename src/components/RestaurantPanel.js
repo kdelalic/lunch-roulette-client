@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Chip, Button, Paper } from '@material-ui/core';
+import { Button, Chip, Paper, Tooltip } from '@material-ui/core';
+import { Home, Phone } from '@material-ui/icons';
 
 import Review from './Review';
 import YelpBurst from '../images/yelp_assets/burst/Yelp_burst_positive_RGB.png';
@@ -38,7 +39,6 @@ class RestaurantPanel extends Component {
           axios
             .get(`${BASE_SERVER_URL}/api/reviews/${restaurantInfo.id}`)
             .then(res => {
-              console.log(res.data.reviews);
               this.setState({
                 reviews: res.data.reviews,
                 loadingReviews: false
@@ -62,7 +62,9 @@ class RestaurantPanel extends Component {
       image_url: imageURL,
       categories,
       url,
-      price
+      price,
+      location,
+      display_phone: displayPhone
     } = restaurantInfo;
 
     return (
@@ -70,9 +72,11 @@ class RestaurantPanel extends Component {
         <div className="header">
           <h2>
             {name}
-            <a href={url} target="_blank" rel="noopener noreferrer">
-              <img alt="View on Yelp" src={YelpBurst} />
-            </a>
+            <Tooltip title="View on Yelp" aria-label="View on Yelp" placement="right">
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                <img alt="View on Yelp" src={YelpBurst} />
+              </a>
+            </Tooltip>
           </h2>
         </div>
         <div className="media">
@@ -84,10 +88,20 @@ class RestaurantPanel extends Component {
           <Paper elevation={containerElevation}>
             <div className="ratingPrice">
               <div className="rating">
-                <img alt={`${rating}/5 Stars`} src={getStarAssetSrc(rating)} />
+                <img alt={`${rating} star rating`} src={getStarAssetSrc(rating)} />
                 <span>{`${reviewCount} reviews`}</span>
               </div>
               <div className="price">{price}</div>
+            </div>
+            <div className="contact">
+              <div className="address">
+                <Home />
+                {location.display_address[0]}
+              </div>
+              <div className="phone">
+                <Phone />
+                <a href={`tel:${displayPhone}`}>{displayPhone}</a>
+              </div>
             </div>
             <div className="categories">
               {categories.map(category => {
@@ -112,9 +126,9 @@ class RestaurantPanel extends Component {
                 onClick={this.onViewReviews}
                 variant="outlined"
                 aria-label="Reviews"
-                className="viewReviews"
+                className="viewReviewsButton"
               >
-                View Latest Reviews
+                View Reviews
               </Button>
             )}
           </Paper>

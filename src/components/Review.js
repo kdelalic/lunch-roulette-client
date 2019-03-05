@@ -20,7 +20,8 @@ const Review = props => {
           <Avatar className="avatar">{firstLetter}</Avatar>
         )}
         {name}
-        <img className="reviewRating" alt={`${rating}/5 Stars`} src={getStarAssetSrc(rating)} />
+        <img className="reviewRating" alt={`${rating} star rating`} src={getStarAssetSrc(rating)} />
+        <span className="timeCreated">{timeCreated.slice(0, timeCreated.indexOf(' '))}</span>
       </div>
       <div className="body">
         {text}
