@@ -85,8 +85,20 @@
 }
 
 .reviews {
+  margin-bottom: 10px;
+  min-height: 0;
+  flex-grow: 1;
+}
+
+.reviews > div {
+  height: 100%;
   overflow-y: scroll;
-  margin-bottom: 15px;
+}
+
+.viewReviews {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .icon {
