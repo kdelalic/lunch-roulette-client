@@ -1,8 +1,8 @@
 .OptionPanel {
   height: 100%;
   flex-grow: 1;
-  background-color: #f4f4f4;
   z-index: 2;
+  background-color: #f4f4f4 !important;
 }
 
 .logo {
