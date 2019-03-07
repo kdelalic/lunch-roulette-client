@@ -8,9 +8,11 @@
   flex-direction: column;
 }
 
+.OptionPanel > div {
+  padding: 10px;
+}
+
 .OptionPanel .logo {
-  background: linear-gradient(to top right, #ff834a, #ffb371);
-  margin: 10px;
   border-radius: 50px;
   text-align: center;
 }
@@ -27,4 +29,13 @@
   margin-bottom: 50px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.OptionPanel .options {
+  flex-grow: 1;
+}
+
+.OptionPanel .options > div {
+  padding: 10px;
+  height: 100%;
 }
