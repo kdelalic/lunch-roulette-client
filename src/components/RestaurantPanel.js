@@ -94,14 +94,18 @@ class RestaurantPanel extends Component {
               <div className="price">{price}</div>
             </div>
             <div className="contact">
-              <div className="address">
-                <Home />
-                {location.display_address[0]}
-              </div>
-              <div className="phone">
-                <Phone />
-                <a href={`tel:${displayPhone}`}>{displayPhone}</a>
-              </div>
+              {location.display_address[0] && (
+                <div className="address">
+                  <Home />
+                  {location.display_address[0]}
+                </div>
+              )}
+              {displayPhone && (
+                <div className="phone">
+                  <Phone />
+                  <a href={`tel:${displayPhone}`}>{displayPhone}</a>
+                </div>
+              )}
             </div>
             <div className="categories">
               {categories.map(category => {

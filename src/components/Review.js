@@ -13,17 +13,17 @@ const Review = props => {
 
   return (
     <div className="Review">
-      <div className="reviewHeader">
+      <div className="header">
         {imageUrl ? (
           <Avatar alt={name} src={imageUrl} className="avatar" />
         ) : (
           <Avatar className="avatar">{firstLetter}</Avatar>
         )}
         {name}
-        <img className="reviewRating" alt={`${rating} star rating`} src={getStarAssetSrc(rating)} />
+        <img className="rating" alt={`${rating} star rating`} src={getStarAssetSrc(rating)} />
         <span className="timeCreated">{timeCreated.slice(0, timeCreated.indexOf(' '))}</span>
       </div>
-      <div className="body">
+      <div className="content">
         {text}
         <a className="readMore" href={url} target="_blank" rel="noopener noreferrer">
           Read more

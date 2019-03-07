@@ -3,17 +3,28 @@
   flex-grow: 1;
   z-index: 2;
   background-color: #f4f4f4 !important;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
-.logo {
-  background-image: linear-gradient(to top right, #ff834a, #ffb371);
+.OptionPanel .logo {
+  background: linear-gradient(to top right, #ff834a, #ffb371);
   margin: 10px;
   border-radius: 50px;
+  text-align: center;
 }
 
-.logo h1 {
+.OptionPanel .logo h1 {
   font-family: 'Righteous', cursive;
   padding: 15px 25px;
   color: black;
   margin: 0;
+}
+
+.OptionPanel .shuffleButton {
+  margin-top: 20px;
+  margin-bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
 }
