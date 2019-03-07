@@ -2,24 +2,24 @@
   padding: 10px;
 }
 
-.avatar {
+.Review .avatar {
   color: #fff;
   background-image: linear-gradient(to top right, #ff834a, #ffb371);
   width: 25px;
   height: 25px;
 }
 
-.reviewHeader {
+.Review .header {
   display: flex;
   align-items: center;
   margin-bottom: 5px;
 }
 
-.reviewHeader > div {
+.Review .header > div {
   margin-right: 10px;
 }
 
-.Review .body {
+.Review .content {
   text-align: left;
   padding: 0 5px;
   font-size: 14px;
@@ -27,21 +27,21 @@
   margin-left: 10px;
 }
 
-.readMore {
+.Review .readMore {
   text-decoration: none;
   margin-left: 4px;
 }
 
-.readMore:hover {
+.Review .readMore:hover {
   text-decoration: underline;
 }
 
-.reviewRating {
+.Review .rating {
   margin-left: auto;
   height: 15px;
 }
 
-.timeCreated {
+.Review .timeCreated {
   margin-left: 5px;
   font-size: 12px;
 }

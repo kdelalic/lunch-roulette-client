@@ -30,14 +30,14 @@
   margin-left: 5px;
 }
 
-.media > div {
+.RestaurantPanel .media > div {
   width: 100%;
   height: 200px;
   overflow: hidden;
   position: relative;
 }
 
-.media img {
+.RestaurantPanel .media img {
   max-width: 100%;
   min-height: 100%;
   position: absolute;
@@ -46,83 +46,84 @@
   transform: translate(-50%, -50%);
 }
 
-.content > div {
+.RestaurantPanel .content > div {
   padding: 10px;
 }
 
-.ratingPrice {
+.RestaurantPanel .ratingPrice {
   display: flex;
   height: 20px;
   justify-content: space-between;
   margin-bottom: 15px;
 }
 
-.rating {
+.RestaurantPanel .rating {
   display: flex;
   height: 100%;
 }
 
-.price svg {
+.RestaurantPanel .price svg {
   height: 100%;
   font-size: 16px;
 }
 
-.content img {
+.RestaurantPanel .content img {
   height: 100%;
 }
 
-.rating span {
+.RestaurantPanel .rating span {
   margin-left: 10px;
 }
 
-.categories {
+.RestaurantPanel .categories {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 15px;
 }
 
-.categoryChip {
+.RestaurantPanel .categoryChip {
   margin: 3px 7px;
-  background-image: linear-gradient(to top right, #ff834a, #ffb371);
+  background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+  color: white;
 }
 
-.reviews {
+.RestaurantPanel .reviews {
   min-height: 0;
   flex-grow: 1;
 }
 
-.reviews > div {
+.RestaurantPanel .reviews > div {
   height: 100%;
   overflow-y: scroll;
 }
 
-.viewReviewsButton {
+.RestaurantPanel .viewReviewsButton {
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.icon {
+.RestaurantPanel .icon {
   transform: rotate(0deg);
   transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms !important;
 }
 
-.rotatedIcon {
+.RestaurantPanel .rotatedIcon {
   transform: rotate(180deg);
 }
 
-.contact {
+.RestaurantPanel .contact {
   margin: 0 5px;
 }
 
-.contact > div {
+.RestaurantPanel .contact > div {
   display: flex;
   align-items: center;
   padding: 5px;
 }
 
-.contact > div svg {
+.RestaurantPanel .contact > div svg {
   margin-right: 5px;
 }
