@@ -25,3 +25,9 @@ export const GOOGLE_MAPS_API_KEY = 'AIzaSyBhiG6J4HBexqPKFHKpmDDzhS48EAd3UxE';
 
 // Default zoom level for Google Maps
 export const DEFAULT_MAP_ZOOM = 14;
+
+// Paper elevation value for panel containers
+export const INNER_CONTAINER_ELEVATION = 1;
+
+// Default radius is 5000 metres
+export const DEFAULT_RADIUS = 5000;

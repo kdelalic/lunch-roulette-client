@@ -8,10 +8,8 @@ import Review from './Review';
 import YelpBurst from '../images/yelp_assets/burst/Yelp_burst_positive_RGB.png';
 import { getStarAssetSrc } from '../utils/common';
 import Logger from '../utils/logger';
-import { BASE_SERVER_URL } from '../utils/config';
+import { BASE_SERVER_URL, INNER_CONTAINER_ELEVATION } from '../utils/config';
 import './RestaurantPanel.css';
-
-const containerElevation = 1;
 
 class RestaurantPanel extends Component {
   logger = new Logger();
@@ -80,12 +78,12 @@ class RestaurantPanel extends Component {
           </h2>
         </div>
         <div className="media">
-          <Paper elevation={containerElevation}>
+          <Paper elevation={INNER_CONTAINER_ELEVATION}>
             <img src={imageURL} alt={name} />
           </Paper>
         </div>
         <div className="content">
-          <Paper elevation={containerElevation}>
+          <Paper elevation={INNER_CONTAINER_ELEVATION}>
             <div className="ratingPrice">
               <div className="rating">
                 <img alt={`${rating} star rating`} src={getStarAssetSrc(rating)} />
@@ -117,7 +115,7 @@ class RestaurantPanel extends Component {
           </Paper>
         </div>
         <div className="reviews">
-          <Paper elevation={containerElevation}>
+          <Paper elevation={INNER_CONTAINER_ELEVATION}>
             {showReviews && reviews ? (
               reviews.map(review => {
                 return <Review key={review.id} reviewInfo={review} />;
