@@ -6,7 +6,13 @@ import OptionPanel from './OptionPanel';
 import Map from './Map';
 import RestaurantPanel from './RestaurantPanel';
 import './App.css';
-import { BASE_SERVER_URL, LIMIT, RESTAURANT_RESET, REFILL_THRESHOLD } from '../utils/config';
+import {
+  BASE_SERVER_URL,
+  LIMIT,
+  RESTAURANT_RESET,
+  REFILL_THRESHOLD,
+  DEFAULT_RADIUS
+} from '../utils/config';
 import Logger from '../utils/logger';
 import { getRandomNumber } from '../utils/common';
 import messages from '../messages/en';
@@ -49,6 +55,7 @@ class App extends Component {
       fetching: false,
       limit: LIMIT,
       offset,
+      radius: DEFAULT_RADIUS,
       prevRestaurants: prevRestaurants || [],
       restaurants: []
     };
@@ -160,7 +167,7 @@ class App extends Component {
 
   // Makes API call to backend to fetch restaurants in bulk
   fetchRestaurants = firstLoad => {
-    const { coords, offset, limit } = this.state;
+    const { coords, offset, limit, radius } = this.state;
     return new Promise((resolve, reject) => {
       axios
         .get(
@@ -168,7 +175,8 @@ class App extends Component {
             `?latitude=${coords.latitude}` +
             `&longitude=${coords.longitude}` +
             `&offset=${offset}` +
-            `&limit=${limit}`
+            `&limit=${limit}` +
+            `&radius=${radius}`
         )
         .then(res => {
           this.setState(
@@ -256,6 +264,10 @@ class App extends Component {
     }
   };
 
+  setRadius = radius => {
+    this.setState({ radius });
+  };
+
   render() {
     const { message, restaurants } = this.state;
     let body;
@@ -267,7 +279,7 @@ class App extends Component {
         // State where there is a restaurant loaded
         body = (
           <Fragment>
-            <OptionPanel getNextRestaurant={this.getNextRestaurant} />
+            <OptionPanel getNextRestaurant={this.getNextRestaurant} setRadiusAPI={this.setRadius} />
             <Map restaurantCoords={restaurant.coordinates} userCoords={coords} />
             <RestaurantPanel key={restaurant.id} restaurantInfo={restaurant} />
           </Fragment>

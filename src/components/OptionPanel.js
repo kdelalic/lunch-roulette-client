@@ -7,11 +7,15 @@ import { INNER_CONTAINER_ELEVATION, DEFAULT_RADIUS } from '../utils/config';
 import './OptionPanel.css';
 
 const OptionPanel = props => {
-  const { getNextRestaurant } = props;
-  const [radius, setRadius] = useState(DEFAULT_RADIUS);
+  const { getNextRestaurant, setRadiusAPI } = props;
+  const [radius, setRadiusSlider] = useState(DEFAULT_RADIUS);
 
   const handleSlider = (event, value) => {
-    setRadius(value);
+    setRadiusSlider(value);
+  };
+
+  const handleSliderDragEnd = () => {
+    setRadiusAPI(radius);
   };
 
   return (
@@ -27,6 +31,7 @@ const OptionPanel = props => {
               className="slider"
               value={radius}
               onChange={handleSlider}
+              onDragEnd={handleSliderDragEnd}
               min={500}
               max={10000}
               step={100}
@@ -47,7 +52,8 @@ const OptionPanel = props => {
 };
 
 OptionPanel.propTypes = {
-  getNextRestaurant: PropTypes.func.isRequired
+  getNextRestaurant: PropTypes.func.isRequired,
+  setRadiusAPI: PropTypes.func.isRequired
 };
 
 export default OptionPanel;
