@@ -1,18 +1,14 @@
 import React, { Component, Fragment } from 'react';
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { MyLocationRounded } from '@material-ui/icons';
 import axios from 'axios';
 
-import OptionPanel from './OptionPanel';
+import OptionsPanel from './OptionsPanel';
 import Map from './Map';
 import RestaurantPanel from './RestaurantPanel';
+import Message from './Message';
 import './App.css';
-import {
-  BASE_SERVER_URL,
-  LIMIT,
-  RESTAURANT_RESET,
-  REFILL_THRESHOLD,
-  DEFAULT_RADIUS
-} from '../utils/config';
+import { LIMIT, RESTAURANT_RESET, REFILL_THRESHOLD, DEFAULT_RADIUS, API } from '../utils/config';
 import Logger from '../utils/logger';
 import { getRandomNumber } from '../utils/common';
 import messages from '../messages/en';
@@ -170,14 +166,7 @@ class App extends Component {
     const { coords, offset, limit, radius } = this.state;
     return new Promise((resolve, reject) => {
       axios
-        .get(
-          `${BASE_SERVER_URL}/api/restaurants` +
-            `?latitude=${coords.latitude}` +
-            `&longitude=${coords.longitude}` +
-            `&offset=${offset}` +
-            `&limit=${limit}` +
-            `&radius=${radius}`
-        )
+        .get(API.GET.RESTAURANTS(coords.latitude, coords.longitude, offset, limit, radius))
         .then(res => {
           this.setState(
             prevState => {
@@ -279,8 +268,12 @@ class App extends Component {
         // State where there is a restaurant loaded
         body = (
           <Fragment>
-            <OptionPanel getNextRestaurant={this.getNextRestaurant} setRadiusAPI={this.setRadius} />
-            <Map restaurantCoords={restaurant.coordinates} userCoords={coords} />
+            <OptionsPanel setRadiusAPI={this.setRadius} />
+            <Map
+              getNextRestaurant={this.getNextRestaurant}
+              restaurantCoords={restaurant.coordinates}
+              userCoords={coords}
+            />
             <RestaurantPanel key={restaurant.id} restaurantInfo={restaurant} />
           </Fragment>
         );
@@ -288,30 +281,26 @@ class App extends Component {
       if (!coords) {
         // Initial state
         body = (
-          <div className="initialState">
+          <div className="initial-state">
             <Button
               id="show-restaurants"
-              className="actionButton"
+              className="action-button"
               onClick={this.getLocation}
               variant="contained"
               color="primary"
             >
-              Show nearby restaurants
+              <span className="action-button-text">Show nearby restaurants</span>
+              <MyLocationRounded />
             </Button>
           </div>
         );
       }
     } else {
       // Message state
-      body = (
-        <div className="messageState">
-          <CircularProgress className="circularProgress" />
-          <h2 id="message">{message}</h2>
-        </div>
-      );
+      body = <Message message={message} />;
     }
 
-    return <div className="App">{body}</div>;
+    return <div className="AppComponent">{body}</div>;
   }
 }
 

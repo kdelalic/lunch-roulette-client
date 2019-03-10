@@ -1,0 +1,17 @@
+.LogoComponent {
+  border-radius: 50px;
+  text-align: center;
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff8c00a3;
+  z-index: 5;
+}
+
+.LogoComponent h1 {
+  font-family: 'Righteous', cursive;
+  color: black;
+  margin: 0;
+  padding: 10px;
+}

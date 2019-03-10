@@ -20,9 +20,11 @@ class Marker extends Component {
     let image;
 
     if (type === 'user') {
-      image = <img alt="User Location" src={userMarker} className="userMarker" />;
+      image = <img alt="User Location" src={userMarker} className="user-marker" />;
     } else if (type === 'restaurant') {
-      image = <img alt="Restaurant Location" src={restaurantMarker} className="restaurantMarker" />;
+      image = (
+        <img alt="Restaurant Location" src={restaurantMarker} className="restaurant-marker" />
+      );
     }
 
     return image;

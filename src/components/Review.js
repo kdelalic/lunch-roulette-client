@@ -12,7 +12,7 @@ const Review = props => {
   const firstLetter = name.substring(0, 1).toUpperCase();
 
   return (
-    <div className="Review">
+    <div className="ReviewComponent">
       <div className="header">
         {imageUrl ? (
           <Avatar alt={name} src={imageUrl} className="avatar" />
@@ -21,11 +21,11 @@ const Review = props => {
         )}
         {name}
         <img className="rating" alt={`${rating} star rating`} src={getStarAssetSrc(rating)} />
-        <span className="timeCreated">{timeCreated.slice(0, timeCreated.indexOf(' '))}</span>
+        <span className="time-created">{timeCreated.slice(0, timeCreated.indexOf(' '))}</span>
       </div>
       <div className="content">
         {text}
-        <a className="readMore" href={url} target="_blank" rel="noopener noreferrer">
+        <a className="read-more" href={url} target="_blank" rel="noopener noreferrer">
           Read more
         </a>
       </div>

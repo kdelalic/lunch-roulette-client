@@ -1,9 +1,9 @@
-.restaurantMarker {
+.restaurant-marker {
   position: absolute;
   transform: translate(-50%, -100%);
 }
 
-.userMarker {
+.user-marker {
   position: absolute;
   width: 25px;
   transform: translate(-50%, -50%);

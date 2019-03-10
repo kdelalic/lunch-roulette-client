@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Button, Chip, Paper, Tooltip } from '@material-ui/core';
-import { Home, Phone } from '@material-ui/icons';
+import { Button, Chip, Modal, Paper, Tooltip } from '@material-ui/core';
+import { Home, Phone, RateReviewOutlined } from '@material-ui/icons';
 
 import Review from './Review';
 import YelpBurst from '../images/yelp_assets/burst/Yelp_burst_positive_RGB.png';
 import { getStarAssetSrc } from '../utils/common';
 import Logger from '../utils/logger';
-import { BASE_SERVER_URL, INNER_CONTAINER_ELEVATION } from '../utils/config';
+import { INNER_CONTAINER_ELEVATION, API } from '../utils/config';
 import './RestaurantPanel.css';
 
 class RestaurantPanel extends Component {
@@ -17,10 +17,11 @@ class RestaurantPanel extends Component {
   state = {
     reviews: null,
     showReviews: false,
-    loadingReviews: false
+    loadingReviews: false,
+    mediaModalOpen: false
   };
 
-  onViewReviews = () => {
+  handleViewReviews = () => {
     this.setState({ showReviews: true });
   };
 
@@ -35,7 +36,7 @@ class RestaurantPanel extends Component {
         },
         () => {
           axios
-            .get(`${BASE_SERVER_URL}/api/reviews/${restaurantInfo.id}`)
+            .get(API.GET.REVIEWS(restaurantInfo.id))
             .then(res => {
               this.setState({
                 reviews: res.data.reviews,
@@ -50,9 +51,17 @@ class RestaurantPanel extends Component {
     }
   };
 
+  handleOpenMediaModal = () => {
+    this.setState({ mediaModalOpen: true });
+  };
+
+  handleCloseMediaModal = () => {
+    this.setState({ mediaModalOpen: false });
+  };
+
   render() {
     const { restaurantInfo } = this.props;
-    const { reviews, showReviews } = this.state;
+    const { reviews, showReviews, mediaModalOpen } = this.state;
     const {
       name,
       rating,
@@ -66,25 +75,33 @@ class RestaurantPanel extends Component {
     } = restaurantInfo;
 
     return (
-      <Paper className="RestaurantPanel" elevation={2}>
+      <Paper className="RestaurantPanelComponent" elevation={2}>
         <div className="header">
           <h2>
             {name}
             <Tooltip title="View on Yelp" aria-label="View on Yelp" placement="right">
               <a href={url} target="_blank" rel="noopener noreferrer">
-                <img alt="View on Yelp" src={YelpBurst} />
+                <img className="yelp-burst" alt="View on Yelp" src={YelpBurst} />
               </a>
             </Tooltip>
           </h2>
         </div>
         <div className="media">
-          <Paper elevation={INNER_CONTAINER_ELEVATION}>
+          <Paper onClick={this.handleOpenMediaModal} elevation={INNER_CONTAINER_ELEVATION}>
             <img src={imageURL} alt={name} />
           </Paper>
+          <Modal
+            onClick={this.handleCloseMediaModal}
+            className="mediaModal"
+            open={mediaModalOpen}
+            onClose={this.handleCloseMediaModal}
+          >
+            <img src={imageURL} alt={name} />
+          </Modal>
         </div>
         <div className="content">
           <Paper elevation={INNER_CONTAINER_ELEVATION}>
-            <div className="ratingPrice">
+            <div className="header">
               <div className="rating">
                 <img alt={`${rating} star rating`} src={getStarAssetSrc(rating)} />
                 <span>{`${reviewCount} reviews`}</span>
@@ -108,7 +125,7 @@ class RestaurantPanel extends Component {
             <div className="categories">
               {categories.map(category => {
                 return (
-                  <Chip label={category.title} key={category.alias} className="categoryChip" />
+                  <Chip label={category.title} key={category.alias} className="category-chip" />
                 );
               })}
             </div>
@@ -125,12 +142,12 @@ class RestaurantPanel extends Component {
                 size="small"
                 onMouseOver={this.loadReviews}
                 onFocus={this.loadReviews}
-                onClick={this.onViewReviews}
+                onClick={this.handleViewReviews}
                 variant="outlined"
-                aria-label="Reviews"
-                className="viewReviewsButton"
+                className="view-reviews-button"
               >
                 View Reviews
+                <RateReviewOutlined />
               </Button>
             )}
           </Paper>
