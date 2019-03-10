@@ -1,12 +1,12 @@
-.OptionsPanelComponent {
+.OptionsPanelContainer {
   height: 100%;
 }
 
-.OptionsPanelComponent * {
+.OptionsPanelContainer * {
   transition: all 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
 }
 
-.OptionsPanelComponent > div {
+.OptionsPanelContainer > div {
   height: 100%;
   flex-grow: 1;
   z-index: 2;
@@ -19,61 +19,61 @@
   position: static;
 }
 
-.OptionsPanelComponent .open > div {
+.OptionsPanelContainer .open > div {
   padding: 10px;
 }
 
-.OptionsPanelComponent .open {
+.OptionsPanelContainer .open {
   width: 300px;
 }
 
-.OptionsPanelComponent .closed {
+.OptionsPanelContainer .closed {
   width: 60px;
   padding: 0;
 }
 
-.OptionsPanelComponent .header {
+.OptionsPanelContainer .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.OptionsPanelComponent .open .header {
+.OptionsPanelContainer .open .header {
   padding: 0;
 }
 
-.OptionsPanelComponent .closed .header {
+.OptionsPanelContainer .closed .header {
   justify-content: flex-end;
   padding: 6px 6px 0;
 }
 
-.OptionsPanelComponent .header h2 {
+.OptionsPanelContainer .header h2 {
   margin: 0;
   padding: 10px;
 }
 
-.OptionsPanelComponent .options {
+.OptionsPanelContainer .options {
   flex-grow: 1;
 }
 
-.OptionsPanelComponent .closed .options {
+.OptionsPanelContainer .closed .options {
   padding: 10px 0 0;
 }
 
-.OptionsPanelComponent .options > div {
+.OptionsPanelContainer .options > div {
   padding: 10px;
   height: 100%;
 }
 
-.OptionsPanelComponent .slider {
+.OptionsPanelContainer .slider {
   margin-top: 10px;
 }
 
-.OptionsPanelComponent .radius-control span {
+.OptionsPanelContainer .radius-control span {
   display: flex;
   align-items: center;
 }
 
-.OptionsPanelComponent .info-icon {
+.OptionsPanelContainer .info-icon {
   font-size: 16px;
 }

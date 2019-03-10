@@ -1,18 +1,18 @@
-.AppComponent {
+.AppContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
   height: 100%;
 }
 
-.AppComponent .initial-state {
+.AppContainer .initial-state {
   width: 100%;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
 }
 
-.AppComponent .action-button {
+.AppContainer .action-button {
   width: fit-content;
   left: 50%;
   transform: translateX(-50%);
@@ -25,10 +25,10 @@
   padding: 0 30px;
 }
 
-.AppComponent .action-button-text {
+.AppContainer .action-button-text {
   margin-right: 5px;
 }
 
-.AppComponent .circular-progress {
+.AppContainer .circular-progress {
   color: #53c3ff;
 }

@@ -12,7 +12,7 @@ const Review = props => {
   const firstLetter = name.substring(0, 1).toUpperCase();
 
   return (
-    <div className="ReviewComponent">
+    <div className="ReviewContainer">
       <div className="header">
         {imageUrl ? (
           <Avatar alt={name} src={imageUrl} className="avatar" />

@@ -1,15 +1,15 @@
-.MapComponent {
+.MapContainer {
   height: 100%;
   flex-grow: 1;
   flex-basis: 40%;
   position: relative;
 }
 
-.MapComponent .google-map {
+.MapContainer .google-map {
   position: absolute;
 }
 
-.MapComponent .shuffle-button {
+.MapContainer .shuffle-button {
   position: absolute;
   bottom: 40px;
   left: 50%;

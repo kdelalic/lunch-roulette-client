@@ -7,7 +7,7 @@ const Message = props => {
   const { message } = props;
 
   return (
-    <div className="MessageComponent">
+    <div className="MessageContainer">
       <CircularProgress className="circular-progress" />
       <h2 id="message">{message}</h2>
     </div>

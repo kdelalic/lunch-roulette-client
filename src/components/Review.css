@@ -1,25 +1,25 @@
-.ReviewComponent {
+.ReviewContainer {
   padding: 10px;
 }
 
-.ReviewComponent .avatar {
+.ReviewContainer .avatar {
   color: #fff;
   background-image: linear-gradient(to top right, #ff834a, #ffb371);
   width: 25px;
   height: 25px;
 }
 
-.ReviewComponent .header {
+.ReviewContainer .header {
   display: flex;
   align-items: center;
   margin-bottom: 5px;
 }
 
-.ReviewComponent .header > div {
+.ReviewContainer .header > div {
   margin-right: 10px;
 }
 
-.ReviewComponent .content {
+.ReviewContainer .content {
   text-align: left;
   padding: 0 5px;
   font-size: 14px;
@@ -27,21 +27,21 @@
   margin-left: 10px;
 }
 
-.ReviewComponent .read-more {
+.ReviewContainer .read-more {
   text-decoration: none;
   margin-left: 4px;
 }
 
-.ReviewComponent .read-more:hover {
+.ReviewContainer .read-more:hover {
   text-decoration: underline;
 }
 
-.ReviewComponent .rating {
+.ReviewContainer .rating {
   margin-left: auto;
   height: 15px;
 }
 
-.ReviewComponent .time-created {
+.ReviewContainer .time-created {
   margin-left: 5px;
   font-size: 12px;
 }

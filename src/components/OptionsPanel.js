@@ -26,7 +26,7 @@ const OptionsPanel = props => {
 
   return (
     <Drawer
-      className="OptionsPanelComponent"
+      className="OptionsPanelContainer"
       classes={{ paper: drawerOpen ? 'open' : 'closed' }}
       open={drawerOpen}
       variant="permanent"
