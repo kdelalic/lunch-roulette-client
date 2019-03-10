@@ -31,3 +31,11 @@ export const INNER_CONTAINER_ELEVATION = 1;
 
 // Default radius is 5000 metres
 export const DEFAULT_RADIUS = 5000;
+
+export const API = {
+  GET: {
+    RESTAURANTS: (latitude, longitude, offset, limit, radius) =>
+      `${BASE_SERVER_URL}/api/restaurants?latitude=${latitude}&longitude=${longitude}&offset=${offset}&limit=${limit}&radius=${radius}`,
+    REVIEWS: restaurantID => `${BASE_SERVER_URL}/api/reviews/${restaurantID}`
+  }
+};

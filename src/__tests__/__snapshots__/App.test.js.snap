@@ -12,10 +12,10 @@ exports[`renders without crashing 1`] = `
     </h1>
   </div>
   <div
-    className="initialState"
+    className="initial-state"
   >
     <WithStyles(Button)
-      className="actionButton"
+      className="action-button"
       color="primary"
       id="show-restaurants"
       onClick={[Function]}
