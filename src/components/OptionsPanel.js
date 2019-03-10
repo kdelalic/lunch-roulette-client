@@ -32,6 +32,7 @@ const OptionsPanel = props => {
       variant="permanent"
     >
       <div className="header">
+        {drawerOpen && <h2>Options</h2>}
         <IconButton className="settings-button" onClick={toggleDrawer}>
           {drawerOpen ? <ArrowBackRounded /> : <SettingsRounded />}
         </IconButton>
