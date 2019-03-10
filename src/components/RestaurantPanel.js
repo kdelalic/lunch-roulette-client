@@ -75,7 +75,7 @@ class RestaurantPanel extends Component {
     } = restaurantInfo;
 
     return (
-      <Paper className="RestaurantPanelComponent" elevation={2}>
+      <Paper className="RestaurantPanelContainer" elevation={2}>
         <div className="header">
           <h2>
             {name}

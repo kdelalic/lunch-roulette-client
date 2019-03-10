@@ -300,7 +300,7 @@ class App extends Component {
       body = <Message message={message} />;
     }
 
-    return <div className="AppComponent">{body}</div>;
+    return <div className="AppContainer">{body}</div>;
   }
 }
 

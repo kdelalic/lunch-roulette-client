@@ -1,4 +1,4 @@
-.LogoComponent {
+.LogoContainer {
   border-radius: 50px;
   text-align: center;
   position: absolute;
@@ -9,7 +9,7 @@
   z-index: 5;
 }
 
-.LogoComponent h1 {
+.LogoContainer h1 {
   font-family: 'Righteous', cursive;
   color: black;
   margin: 0;

@@ -4,7 +4,7 @@ import './Logo.css';
 
 const Logo = props => {
   return (
-    <div className="LogoComponent">
+    <div className="LogoContainer">
       <h1>Lunch Roulette</h1>
     </div>
   );

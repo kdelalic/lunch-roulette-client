@@ -13,7 +13,7 @@ const Map = props => {
   const { getNextRestaurant, restaurantCoords, userCoords } = props;
 
   return (
-    <div className="MapComponent">
+    <div className="MapContainer">
       <Logo />
       <GoogleMapReact
         className="google-map"
