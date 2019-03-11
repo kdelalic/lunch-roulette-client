@@ -108,26 +108,28 @@ class RestaurantPanel extends Component {
               </div>
               <div className="price">{price}</div>
             </div>
-            <div className="contact">
-              {location.display_address[0] && (
-                <div className="address">
-                  <Home />
-                  {location.display_address[0]}
-                </div>
-              )}
-              {displayPhone && (
-                <div className="phone">
-                  <Phone />
-                  <a href={`tel:${displayPhone}`}>{displayPhone}</a>
-                </div>
-              )}
-            </div>
-            <div className="categories">
-              {categories.map(category => {
-                return (
-                  <Chip label={category.title} key={category.alias} className="category-chip" />
-                );
-              })}
+            <div className="body">
+              <div className="contact">
+                {location.display_address[0] && (
+                  <div className="address">
+                    <Home />
+                    {location.display_address[0]}
+                  </div>
+                )}
+                {displayPhone && (
+                  <div className="phone">
+                    <Phone />
+                    <a href={`tel:${displayPhone}`}>{displayPhone}</a>
+                  </div>
+                )}
+              </div>
+              <div className="categories">
+                {categories.map(category => {
+                  return (
+                    <Chip label={category.title} key={category.alias} className="category-chip" />
+                  );
+                })}
+              </div>
             </div>
           </Paper>
         </div>
