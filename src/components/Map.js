@@ -32,7 +32,6 @@ const Map = props => {
         className="action-button shuffle-button"
         onMouseDown={getNextRestaurant}
         variant="contained"
-        color="primary"
       >
         <span className="action-button-text">Shuffle</span>
         <ShuffleRounded />
