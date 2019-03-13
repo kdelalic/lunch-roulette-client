@@ -29,8 +29,8 @@ export const DEFAULT_MAP_ZOOM = 14;
 // Paper elevation value for panel containers
 export const INNER_CONTAINER_ELEVATION = 1;
 
-// Default radius is 5000 metres
-export const DEFAULT_RADIUS = 5000;
+// Default search radius
+export const DEFAULT_RADIUS = 2500;
 
 export const API = {
   GET: {

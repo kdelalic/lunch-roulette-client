@@ -8,7 +8,14 @@ import Map from './Map';
 import RestaurantPanel from './RestaurantPanel';
 import Message from './Message';
 import './App.css';
-import { LIMIT, RESTAURANT_RESET, REFILL_THRESHOLD, DEFAULT_RADIUS, API } from '../utils/config';
+import {
+  DEVELOPMENT_MODE,
+  LIMIT,
+  RESTAURANT_RESET,
+  REFILL_THRESHOLD,
+  DEFAULT_RADIUS,
+  API
+} from '../utils/config';
 import Logger from '../utils/logger';
 import { getRandomNumber } from '../utils/common';
 import messages from '../messages/en';
@@ -23,6 +30,7 @@ class App extends Component {
 
     let prevOffset;
     let prevRestaurants;
+    let offset;
 
     try {
       // Previous offset in the list of restaurants
@@ -36,23 +44,31 @@ class App extends Component {
     // or if the prevOffset is greater than the set limit,
     // then we reset it to 0
     // otherwise we use the prevOffset
-    const offset = isNaN(prevOffset) || prevOffset > RESTAURANT_RESET ? 0 : prevOffset;
+    if (isNaN(prevOffset) || prevOffset >= RESTAURANT_RESET) {
+      offset = 0;
+      prevRestaurants = [];
+    } else {
+      offset = prevOffset;
+    }
     this.logger.info('offset', offset);
 
-    try {
-      // List of previous restaurants
-      prevRestaurants = JSON.parse(window.localStorage.getItem('prevRestaurants'));
-    } catch (err) {
-      this.logger.error('JSON.parse for prevRestaurants error', err);
+    if (offset === 0) {
+      prevRestaurants = [];
+    } else {
+      try {
+        // List of previous restaurants
+        prevRestaurants = JSON.parse(window.localStorage.getItem('prevRestaurants'));
+      } catch (err) {
+        this.logger.error('JSON.parse for prevRestaurants error', err);
+      }
     }
     this.logger.info('number of prevRestaurants', prevRestaurants ? prevRestaurants.length : 0);
 
     this.state = {
       fetching: false,
-      limit: LIMIT,
       offset,
       radius: DEFAULT_RADIUS,
-      prevRestaurants: prevRestaurants || [],
+      prevRestaurants,
       restaurants: []
     };
   }
@@ -163,18 +179,20 @@ class App extends Component {
 
   // Makes API call to backend to fetch restaurants in bulk
   fetchRestaurants = firstLoad => {
-    const { coords, offset, limit, radius } = this.state;
+    const { coords, offset, radius } = this.state;
     return new Promise((resolve, reject) => {
       axios
-        .get(API.GET.RESTAURANTS(coords.latitude, coords.longitude, offset, limit, radius))
+        .get(API.GET.RESTAURANTS(coords.latitude, coords.longitude, offset, LIMIT, radius))
         .then(res => {
           this.setState(
             prevState => {
               let { prevRestaurants } = prevState;
-              // Sets previous offset in local storage
-              window.localStorage.setItem('prevOffset', prevState.offset);
 
               let restaurants;
+              let newOffset;
+
+              // Sets previous offset in local storage
+              window.localStorage.setItem('prevOffset', prevState.offset);
 
               if (firstLoad) {
                 // On first restaurant load this filters out the previous
@@ -185,15 +203,20 @@ class App extends Component {
               } else {
                 // If not first load, sets restaurants to response
                 restaurants = res.data;
+              }
+
+              if (prevState.offset >= RESTAURANT_RESET) {
+                newOffset = 0;
                 prevRestaurants = [];
+              } else {
+                newOffset = prevState.offset + LIMIT;
               }
 
               return {
                 restaurants: restaurants.concat(prevState.restaurants),
                 message: null,
                 fetching: false,
-                offset:
-                  prevState.offset >= RESTAURANT_RESET ? 0 : prevState.offset + prevState.limit,
+                offset: newOffset,
                 prevRestaurants
               };
             },
@@ -210,11 +233,11 @@ class App extends Component {
 
   // Displays next restaurant
   getNextRestaurant = () => {
-    const { message, restaurants, fetching, limit, prevRestaurants } = this.state;
+    const { message, restaurants, fetching, prevRestaurants } = this.state;
 
     // If number of restaurants in state are less than 20% of limit,
     // then more restaurants are loaded into the stat
-    if (!message && restaurants.length <= Math.round(limit * REFILL_THRESHOLD) && !fetching) {
+    if (!message && restaurants.length <= Math.round(LIMIT * REFILL_THRESHOLD) && !fetching) {
       this.setState(
         {
           fetching: true,
@@ -234,7 +257,7 @@ class App extends Component {
 
       prevRestaurants.push(restaurant.id);
 
-      console.log(restaurant);
+      if (DEVELOPMENT_MODE) console.log(restaurant);
 
       // Updates previous restaurants in local storage
       window.localStorage.setItem('prevRestaurants', JSON.stringify(prevRestaurants));
@@ -257,6 +280,21 @@ class App extends Component {
     this.setState({ radius });
   };
 
+  reloadRestaurants = () => {
+    return new Promise((resolve, reject) => {
+      this.fetchRestaurants(true)
+        .then(() => {
+          // Displays next restaurants after restaurants are done loading
+          this.getNextRestaurant();
+          resolve();
+        })
+        .catch(err => {
+          this.logger.error('fetchRestaurants', err);
+          reject();
+        });
+    });
+  };
+
   render() {
     const { message, restaurants } = this.state;
     let body;
@@ -268,7 +306,10 @@ class App extends Component {
         // State where there is a restaurant loaded
         body = (
           <Fragment>
-            <OptionsPanel setRadiusAPI={this.setRadius} />
+            <OptionsPanel
+              setRadiusAPI={this.setRadius}
+              reloadRestaurants={this.reloadRestaurants}
+            />
             <Map
               getNextRestaurant={this.getNextRestaurant}
               restaurantCoords={restaurant.coordinates}

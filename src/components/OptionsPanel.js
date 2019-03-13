@@ -13,10 +13,10 @@ import { INNER_CONTAINER_ELEVATION, DEFAULT_RADIUS } from '../utils/config';
 import './OptionsPanel.css';
 
 const OptionsPanel = props => {
-  const { setRadiusAPI } = props;
+  const { setRadiusAPI, reloadRestaurants } = props;
   const [radius, setRadiusSlider] = useState(DEFAULT_RADIUS);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [optionsTouched, setOptionsTouched] = useState(false);
+  const [optionsApplied, setOptionsApplied] = useState(true);
 
   const handleSlider = (event, value) => {
     setRadiusSlider(value);
@@ -24,15 +24,17 @@ const OptionsPanel = props => {
 
   const handleSliderDragEnd = () => {
     setRadiusAPI(radius);
-    setOptionsTouched(true);
+    setOptionsApplied(false);
   };
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const reloadRestaurants = () => {
-    setOptionsTouched(false);
+  const handleApplyOptions = () => {
+    reloadRestaurants().then(() => {
+      setOptionsApplied(true);
+    });
   };
 
   return (
@@ -79,10 +81,10 @@ const OptionsPanel = props => {
       {drawerOpen && (
         <div className="reload-button-div">
           <Button
-            onClick={reloadRestaurants}
+            onClick={handleApplyOptions}
             className="action-button reload-button"
             variant="contained"
-            disabled={!optionsTouched}
+            disabled={optionsApplied}
           >
             <span className="action-button-text">Apply options</span>
             <RefreshRounded />
@@ -94,7 +96,8 @@ const OptionsPanel = props => {
 };
 
 OptionsPanel.propTypes = {
-  setRadiusAPI: PropTypes.func.isRequired
+  setRadiusAPI: PropTypes.func.isRequired,
+  reloadRestaurants: PropTypes.func.isRequired
 };
 
 export default OptionsPanel;
