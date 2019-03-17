@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Button, Drawer, IconButton, Paper, Tooltip } from '@material-ui/core';
+import { Button, CircularProgress, Drawer, IconButton, Paper, Tooltip } from '@material-ui/core';
 import Slider from '@material-ui/lab/Slider';
 import {
   ArrowBackRounded,
@@ -17,6 +17,7 @@ const OptionsPanel = props => {
   const [radius, setRadiusSlider] = useState(DEFAULT_RADIUS);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [optionsApplied, setOptionsApplied] = useState(true);
+  const [reloading, setReloading] = useState(false);
 
   const handleSlider = (event, value) => {
     setRadiusSlider(value);
@@ -32,9 +33,16 @@ const OptionsPanel = props => {
   };
 
   const handleApplyOptions = () => {
-    reloadRestaurants().then(() => {
-      setOptionsApplied(true);
-    });
+    setReloading(true);
+    reloadRestaurants()
+      .then(() => {
+        setReloading(false);
+        setOptionsApplied(true);
+      })
+      .catch(() => {
+        setReloading(false);
+        setOptionsApplied(true);
+      });
   };
 
   return (
@@ -79,16 +87,21 @@ const OptionsPanel = props => {
       </div>
 
       {drawerOpen && (
-        <div className="reload-button-div">
+        <div className="reload-button-wrapper">
           <Button
             onClick={handleApplyOptions}
             className="action-button reload-button"
             variant="contained"
-            disabled={optionsApplied}
+            disabled={optionsApplied || reloading}
           >
             <span className="action-button-text">Apply options</span>
             <RefreshRounded />
           </Button>
+          {reloading && (
+            <div className="reload-progress-wrapper">
+              <CircularProgress size={24} />
+            </div>
+          )}
         </div>
       )}
     </Drawer>
