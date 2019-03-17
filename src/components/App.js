@@ -130,7 +130,7 @@ class App extends Component {
                   // Stores current coordinates in localStorage for next session
                   window.localStorage.setItem('prevCoords', JSON.stringify(coords));
                   // Loads restaurants into app
-                  this.fetchRestaurants(true)
+                  this.fetchRestaurants(true, false)
                     .then(() => {
                       // Displays next restaurants after restaurants are done loading
                       this.getNextRestaurant();
@@ -178,7 +178,7 @@ class App extends Component {
   };
 
   // Makes API call to backend to fetch restaurants in bulk
-  fetchRestaurants = firstLoad => {
+  fetchRestaurants = (firstLoad, reload) => {
     const { coords, offset, radius } = this.state;
     return new Promise((resolve, reject) => {
       axios
@@ -194,12 +194,16 @@ class App extends Component {
               // Sets previous offset in local storage
               window.localStorage.setItem('prevOffset', prevState.offset);
 
-              if (firstLoad) {
+              if (firstLoad || reload) {
                 // On first restaurant load this filters out the previous
                 // restaurants from the potential ones that can be showed to user
                 restaurants = res.data.filter(value => {
                   return !prevRestaurants.includes(value.id);
                 });
+
+                if (!restaurants) {
+                  restaurants = res.data;
+                }
               } else {
                 // If not first load, sets restaurants to response
                 restaurants = res.data;
@@ -212,8 +216,12 @@ class App extends Component {
                 newOffset = prevState.offset + LIMIT;
               }
 
+              if (!reload) {
+                restaurants = restaurants.concat(prevState.restaurants);
+              }
+
               return {
-                restaurants: restaurants.concat(prevState.restaurants),
+                restaurants,
                 message: null,
                 fetching: false,
                 offset: newOffset,
@@ -247,7 +255,7 @@ class App extends Component {
           if (restaurants.length > 0) {
             this.getNextRestaurant();
           }
-          this.fetchRestaurants();
+          this.fetchRestaurants(false, false);
         }
       );
     } else {
@@ -282,7 +290,7 @@ class App extends Component {
 
   reloadRestaurants = () => {
     return new Promise((resolve, reject) => {
-      this.fetchRestaurants(true)
+      this.fetchRestaurants(false, true)
         .then(() => {
           // Displays next restaurants after restaurants are done loading
           this.getNextRestaurant();
