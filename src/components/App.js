@@ -155,9 +155,6 @@ class App extends Component {
                 case error.TIMEOUT:
                   message = messages.geoRequestTimeout;
                   break;
-                case error.UNKNOWN_ERROR:
-                  message = messages.unknownError;
-                  break;
                 default:
                   message = messages.unknownError;
                   break;
