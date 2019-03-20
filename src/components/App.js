@@ -292,6 +292,7 @@ class App extends Component {
         .then(() => {
           // Displays next restaurants after restaurants are done loading
           console.log(restaurants);
+
           this.getNextRestaurant();
           resolve();
         })
