@@ -290,11 +290,13 @@ class App extends Component {
     return new Promise((resolve, reject) => {
       this.fetchRestaurants(false, true)
         .then(() => {
-          // Displays next restaurants after restaurants are done loading
-          console.log(restaurants);
-
-          this.getNextRestaurant();
-          resolve();
+          if (restaurants.length === 0) {
+            this.reloadRestaurants();
+          } else {
+            // Displays next restaurants after restaurants are done loading
+            this.getNextRestaurant();
+            resolve();
+          }
         })
         .catch(err => {
           this.logger.error('fetchRestaurants', err);

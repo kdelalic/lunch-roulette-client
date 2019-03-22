@@ -32,6 +32,10 @@ export const INNER_CONTAINER_ELEVATION = 1;
 // Default search radius
 export const DEFAULT_RADIUS = 2500;
 
+// Amount by which to increment radius if no restaurants are returned
+export const RADIUS_INCREMENT = 1000;
+
+// API URLS
 export const API = {
   GET: {
     RESTAURANTS: (latitude, longitude, offset, limit, radius) =>
