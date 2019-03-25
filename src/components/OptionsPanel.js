@@ -1,5 +1,13 @@
-import React, { Fragment, useState } from 'react';
-import { Button, CircularProgress, Drawer, IconButton, Paper, Tooltip } from '@material-ui/core';
+import React, { useState } from 'react';
+import {
+  Button,
+  CircularProgress,
+  Drawer,
+  IconButton,
+  Paper,
+  TextField,
+  Tooltip
+} from '@material-ui/core';
 import Slider from '@material-ui/lab/Slider';
 import {
   ArrowBackRounded,
@@ -60,30 +68,37 @@ const OptionsPanel = props => {
       </div>
 
       <div className="options">
-        <Paper elevation={INNER_CONTAINER_ELEVATION}>
-          <div className="radius-control">
-            {drawerOpen && (
-              <Fragment>
-                <div className="option-value">
-                  <span>{`Radius: ${radius} meters`}</span>
-                  <Tooltip title="Suggested search radius in meters" placement="right">
-                    <InfoOutlined className="info-icon" />
-                  </Tooltip>
-                </div>
+        {drawerOpen && (
+          <Paper elevation={INNER_CONTAINER_ELEVATION}>
+            <div className="radius-control">
+              <div className="option-value">
+                <span>{`Radius: ${radius} meters`}</span>
+                <Tooltip title="Suggested search radius in meters" placement="right">
+                  <InfoOutlined className="info-icon" />
+                </Tooltip>
+              </div>
 
-                <Slider
-                  className="slider"
-                  value={radius}
-                  onChange={handleSlider}
-                  onDragEnd={handleSliderDragEnd}
-                  min={500}
-                  max={10000}
-                  step={100}
-                />
-              </Fragment>
-            )}
-          </div>
-        </Paper>
+              <Slider
+                className="slider"
+                value={radius}
+                onChange={handleSlider}
+                onDragEnd={handleSliderDragEnd}
+                min={500}
+                max={10000}
+                step={100}
+              />
+            </div>
+            <div className="search-term">
+              <TextField
+                id="standard-search"
+                label="Search field"
+                type="search"
+                className="search-term-field"
+                margin="normal"
+              />
+            </div>
+          </Paper>
+        )}
       </div>
 
       {drawerOpen && (
