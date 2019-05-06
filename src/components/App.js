@@ -68,6 +68,7 @@ class App extends Component {
       fetching: false,
       offset,
       radius: DEFAULT_RADIUS,
+      term: '',
       prevRestaurants,
       restaurants: []
     };
@@ -176,10 +177,10 @@ class App extends Component {
 
   // Makes API call to backend to fetch restaurants in bulk
   fetchRestaurants = (firstLoad, reload) => {
-    const { coords, offset, radius } = this.state;
+    const { coords, offset, radius, term } = this.state;
     return new Promise((resolve, reject) => {
       axios
-        .get(API.GET.RESTAURANTS(coords.latitude, coords.longitude, offset, LIMIT, radius))
+        .get(API.GET.RESTAURANTS(coords.latitude, coords.longitude, offset, LIMIT, radius, term))
         .then(res => {
           this.setState(
             prevState => {
@@ -281,8 +282,8 @@ class App extends Component {
     }
   };
 
-  setRadius = radius => {
-    this.setState({ radius });
+  setAPIOptions = (radius, term) => {
+    this.setState({ radius, term });
   };
 
   reloadRestaurants = () => {
@@ -317,7 +318,7 @@ class App extends Component {
         body = (
           <Fragment>
             <OptionsPanel
-              setRadiusAPI={this.setRadius}
+              setAPIOptions={this.setAPIOptions}
               reloadRestaurants={this.reloadRestaurants}
             />
             <Map
