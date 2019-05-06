@@ -38,8 +38,8 @@ export const RADIUS_INCREMENT = 1000;
 // API URLS
 export const API = {
   GET: {
-    RESTAURANTS: (latitude, longitude, offset, limit, radius) =>
-      `${BASE_SERVER_URL}/api/restaurants?latitude=${latitude}&longitude=${longitude}&offset=${offset}&limit=${limit}&radius=${radius}`,
+    RESTAURANTS: (latitude, longitude, offset, limit, radius, term) =>
+      `${BASE_SERVER_URL}/api/restaurants?latitude=${latitude}&longitude=${longitude}&offset=${offset}&limit=${limit}&radius=${radius}&term=${term}`,
     REVIEWS: restaurantID => `${BASE_SERVER_URL}/api/reviews/${restaurantID}`
   }
 };

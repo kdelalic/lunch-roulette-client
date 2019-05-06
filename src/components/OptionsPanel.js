@@ -21,8 +21,9 @@ import { INNER_CONTAINER_ELEVATION, DEFAULT_RADIUS } from '../utils/config';
 import './OptionsPanel.css';
 
 const OptionsPanel = props => {
-  const { setRadiusAPI, reloadRestaurants } = props;
+  const { setAPIOptions, reloadRestaurants } = props;
   const [radius, setRadiusSlider] = useState(DEFAULT_RADIUS);
+  const [searchTerm, setSearchTerm] = useState(undefined);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [optionsApplied, setOptionsApplied] = useState(true);
   const [reloading, setReloading] = useState(false);
@@ -32,15 +33,16 @@ const OptionsPanel = props => {
   };
 
   const handleSliderDragEnd = () => {
-    setRadiusAPI(radius);
     setOptionsApplied(false);
   };
 
-  const toggleDrawer = () => {
-    setDrawerOpen(!drawerOpen);
+  const handleSearchTerm = (event, value) => {
+    setSearchTerm(value);
+    setOptionsApplied(false);
   };
 
   const handleApplyOptions = () => {
+    setAPIOptions(radius, searchTerm);
     setReloading(true);
     reloadRestaurants()
       .then(() => {
@@ -51,6 +53,10 @@ const OptionsPanel = props => {
         setReloading(false);
         setOptionsApplied(true);
       });
+  };
+
+  const toggleDrawer = () => {
+    setDrawerOpen(!drawerOpen);
   };
 
   return (
@@ -88,13 +94,15 @@ const OptionsPanel = props => {
                 step={100}
               />
             </div>
-            <div className="search-term">
+            <div className="search-term-control">
               <TextField
                 id="standard-search"
-                label="Search field"
+                label="Search term"
                 type="search"
-                className="search-term-field"
-                margin="normal"
+                onChange={handleSearchTerm}
+                className="textfield"
+                margin="dense"
+                variant="outlined"
               />
             </div>
           </Paper>
@@ -124,7 +132,7 @@ const OptionsPanel = props => {
 };
 
 OptionsPanel.propTypes = {
-  setRadiusAPI: PropTypes.func.isRequired,
+  setAPIOptions: PropTypes.func.isRequired,
   reloadRestaurants: PropTypes.func.isRequired
 };
 
