@@ -9,8 +9,8 @@ install:
 before_script:
   - npm run build
 
-script:
-  - npm run test
+# script:
+#  - npm run test
 
 cache:
   directories:
